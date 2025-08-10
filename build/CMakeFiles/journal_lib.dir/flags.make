@@ -4,7 +4,7 @@
 # compile CXX with D:/Program Files (x86)/gcc/bin/g++.exe
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = @CMakeFiles/journal_lib.dir/includes_CXX.rsp
 
-CXX_FLAGS = -std=gnu++17
+CXX_FLAGS = -g -std=gnu++17
 
