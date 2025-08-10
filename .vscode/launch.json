@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Program",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/journal_app.exe",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "externalConsole": true
+    }
+  ]
+}

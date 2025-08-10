@@ -1,0 +1,2 @@
+"D:/Program Files (x86)/gcc/bin/ar.exe" qc libjournal_lib.a CMakeFiles/journal_lib.dir/journal_lib.cpp.obj
+"D:/Program Files (x86)/gcc/bin/ranlib.exe" libjournal_lib.a
