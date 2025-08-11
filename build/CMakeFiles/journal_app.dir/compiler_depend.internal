@@ -4,10 +4,12 @@
 CMakeFiles/journal_app.dir/journal_app.cpp.obj
  D:/Program Files (x86)/VS Code projects/messages_lib_app/journal_app.cpp
  D:/Program Files (x86)/VS Code projects/messages_lib_app/journal_lib.hpp
+ D:/Program Files (x86)/gcc/include/c++/14.2.0/algorithm
  D:/Program Files (x86)/gcc/include/c++/14.2.0/array
  D:/Program Files (x86)/gcc/include/c++/14.2.0/atomic
  D:/Program Files (x86)/gcc/include/c++/14.2.0/backward/binders.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bit
+ D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/algorithmfwd.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/alloc_traits.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/allocated_ptr.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/allocator.h
@@ -66,6 +68,7 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/std_function.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/std_mutex.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/std_thread.h
+ D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_algo.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_algobase.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_bvector.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_construct.h
@@ -77,6 +80,7 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_iterator_base_types.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_pair.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_queue.h
+ D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_tempbuf.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_uninitialized.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stl_vector.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/streambuf.tcc
@@ -84,6 +88,7 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/string_view.tcc
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/stringfwd.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/this_thread_sleep.h
+ D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/uniform_int_dist.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/unique_lock.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/unique_ptr.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/bits/unordered_map.h
@@ -127,6 +132,8 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj
  D:/Program Files (x86)/gcc/include/c++/14.2.0/mutex
  D:/Program Files (x86)/gcc/include/c++/14.2.0/new
  D:/Program Files (x86)/gcc/include/c++/14.2.0/ostream
+ D:/Program Files (x86)/gcc/include/c++/14.2.0/pstl/execution_defs.h
+ D:/Program Files (x86)/gcc/include/c++/14.2.0/pstl/glue_algorithm_defs.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/pstl/pstl_config.h
  D:/Program Files (x86)/gcc/include/c++/14.2.0/queue
  D:/Program Files (x86)/gcc/include/c++/14.2.0/ratio

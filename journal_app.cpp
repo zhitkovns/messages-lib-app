@@ -1,5 +1,7 @@
 #include "journal_lib.hpp"
 #include <iostream>
+#include <algorithm>
+#include <cctype>
 #include <string>
 #include <thread>
 #include <mutex>
@@ -109,8 +111,12 @@ public:
             std::cout << "Enter importance (LOW, MEDIUM, HIGH): ";
             std::string importance_str;
             std::getline(std::cin, importance_str);
-
+            std::transform(importance_str.begin(), 
+               importance_str.end(),
+               importance_str.begin(),
+               [](unsigned char c){ return std::toupper(c); });
             importances importance = parse_importance(importance_str);
+            
             m_logger.log(input, importance);
         }
     }

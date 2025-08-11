@@ -3,10 +3,12 @@
 
 CMakeFiles/journal_app.dir/journal_app.cpp.obj: D:/Program\ Files\ (x86)/VS\ Code\ projects/messages_lib_app/journal_app.cpp \
   D:/Program\ Files\ (x86)/VS\ Code\ projects/messages_lib_app/journal_lib.hpp \
+  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/algorithm \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/array \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/atomic \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/backward/binders.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bit \
+  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/algorithmfwd.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/alloc_traits.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/allocated_ptr.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/allocator.h \
@@ -65,6 +67,7 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj: D:/Program\ Files\ (x86)/VS\ Cod
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/std_function.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/std_mutex.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/std_thread.h \
+  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_algo.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_algobase.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_bvector.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_construct.h \
@@ -76,6 +79,7 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj: D:/Program\ Files\ (x86)/VS\ Cod
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_iterator_base_types.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_pair.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_queue.h \
+  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_tempbuf.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_uninitialized.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_vector.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/streambuf.tcc \
@@ -83,6 +87,7 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj: D:/Program\ Files\ (x86)/VS\ Cod
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/string_view.tcc \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stringfwd.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/this_thread_sleep.h \
+  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/uniform_int_dist.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/unique_lock.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/unique_ptr.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/unordered_map.h \
@@ -126,6 +131,8 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj: D:/Program\ Files\ (x86)/VS\ Cod
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/mutex \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/new \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/ostream \
+  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/pstl/execution_defs.h \
+  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/pstl/pstl_config.h \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/queue \
   D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/ratio \
@@ -192,19 +199,13 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj: D:/Program\ Files\ (x86)/VS\ Cod
   D:/Program\ Files\ (x86)/gcc/x86_64-w64-mingw32/include/wctype.h
 
 
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/unordered_map:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/allocated_ptr.h:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/atomic_lockfree_defines.h:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/hashtable.h:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/memoryfwd.h:
-
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/initializer_list:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/new_allocator.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/concepts:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/algorithm:
 
 D:/Program\ Files\ (x86)/gcc/lib/gcc/x86_64-w64-mingw32/14.2.0/include/syslimits.h:
 
@@ -216,17 +217,31 @@ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/array:
 
 D:/Program\ Files\ (x86)/VS\ Code\ projects/messages_lib_app/journal_app.cpp:
 
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/chrono.h:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/alloc_traits.h:
-
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/refwrap.h:
 
 D:/Program\ Files\ (x86)/VS\ Code\ projects/messages_lib_app/journal_lib.hpp:
 
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/algorithmfwd.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/codecvt.h:
+
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/atomic:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bit:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/chrono.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/alloc_traits.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/unordered_map:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/allocated_ptr.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/atomic_lockfree_defines.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/hashtable.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/memoryfwd.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/deque:
 
@@ -240,15 +255,15 @@ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/atomic_base.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/nested_exception.h:
 
-D:/Program\ Files\ (x86)/gcc/x86_64-w64-mingw32/include/crtdefs.h:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/basic_ios.h:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/std_thread.h:
-
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/ext/alloc_traits.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/ptr_traits.h:
+
+D:/Program\ Files\ (x86)/gcc/x86_64-w64-mingw32/include/crtdefs.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/std_thread.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/basic_ios.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/parse_numbers.h:
 
@@ -271,8 +286,6 @@ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/basic_string.tcc:
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/exception_ptr.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/charconv.h:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/codecvt.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++locale.h:
 
@@ -354,6 +367,12 @@ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/std_function.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/std_mutex.h:
 
+D:/Program\ Files\ (x86)/gcc/x86_64-w64-mingw32/include/stdlib.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/streambuf.tcc:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_algo.h:
+
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_bvector.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_construct.h:
@@ -382,13 +401,11 @@ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_pair.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_queue.h:
 
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_tempbuf.h:
+
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_uninitialized.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_vector.h:
-
-D:/Program\ Files\ (x86)/gcc/x86_64-w64-mingw32/include/stdlib.h:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/streambuf.tcc:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/streambuf_iterator.h:
 
@@ -399,6 +416,8 @@ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stringfwd.h:
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/pstl/pstl_config.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/this_thread_sleep.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/uniform_int_dist.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/unique_lock.h:
 
@@ -427,8 +446,6 @@ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/cerrno:
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/clocale:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/compare:
-
-D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/concepts:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/condition_variable:
 
@@ -477,6 +494,10 @@ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/limits:
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/mutex:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/ostream:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/pstl/execution_defs.h:
+
+D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/pstl/glue_algorithm_defs.h:
 
 D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/ratio:
 

@@ -143,6 +143,14 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj: \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/fstream.tcc \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/iostream \
+ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/algorithm \
+ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_algo.h \
+ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/algorithmfwd.h \
+ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_heap.h \
+ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/uniform_int_dist.h \
+ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_tempbuf.h \
+ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
+ D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/pstl/execution_defs.h \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/thread \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/std_thread.h \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/unique_ptr.h \
@@ -173,7 +181,6 @@ CMakeFiles/journal_app.dir/journal_app.cpp.obj: \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_vector.h \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_bvector.h \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/vector.tcc \
- D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_heap.h \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/stl_queue.h \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/atomic \
  D:/Program\ Files\ (x86)/gcc/include/c++/14.2.0/bits/atomic_base.h \
