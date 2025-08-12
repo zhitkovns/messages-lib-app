@@ -2,6 +2,9 @@
 #include <stdexcept>
 #include <iomanip>
 #include <sstream>
+#include <cstring>
+#include <cerrno>
+#include <unistd.h>
 
 //=== FileOutput ===//
 FileOutput::FileOutput(const std::string& filename) 
@@ -36,24 +39,15 @@ void FileOutput::reopen() {
 //=== SocketOutput ===//
 SocketOutput::SocketOutput(const std::string& host, int port) 
     : host(host), port(port) {
-#ifdef _WIN32
-    WSADATA wsaData;
-    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-        throw std::runtime_error("WSAStartup failed");
-    }
-#endif
     connect();
 }
 
 SocketOutput::~SocketOutput() {
     disconnect();
-#ifdef _WIN32
-    WSACleanup();
-#endif
 }
 
 void SocketOutput::write(const std::string& message) {
-    if (sockfd == INVALID_SOCKET) {
+    if (sockfd == -1) {
         try {
             connect();
         } catch (const std::runtime_error& e) {
@@ -62,25 +56,20 @@ void SocketOutput::write(const std::string& message) {
     }
 
     int result = send(sockfd, message.c_str(), message.size(), 0);
-    if (result == SOCKET_ERROR) {
+    if (result == -1) {
         disconnect();
-        throw std::runtime_error("Socket send failed (WSAGetLastError: " + std::to_string(WSAGetLastError()) + ")");
+        throw std::runtime_error("Socket send failed: " + std::string(strerror(errno)));
     }
 }
 
 bool SocketOutput::is_connected() const {
-#ifdef _WIN32
-    return sockfd != INVALID_SOCKET;
-#else
     return sockfd != -1;
-#endif
 }
 
 void SocketOutput::connect() {
-#ifdef _WIN32
-    sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if (sockfd == INVALID_SOCKET) {
-        throw std::runtime_error("Socket creation failed");
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd == -1) {
+        throw std::runtime_error("Socket creation failed: " + std::string(strerror(errno)));
     }
 
     sockaddr_in serverAddr;
@@ -89,24 +78,17 @@ void SocketOutput::connect() {
     inet_pton(AF_INET, host.c_str(), &serverAddr.sin_addr);
 
     if (::connect(sockfd, (sockaddr*)&serverAddr, sizeof(serverAddr))) {
-        closesocket(sockfd);
-        sockfd = INVALID_SOCKET;
-        throw std::runtime_error("Connection failed");
+        close(sockfd);
+        sockfd = -1;
+        throw std::runtime_error("Connection failed: " + std::string(strerror(errno)));
     }
-#else
-    // Linux/Unix реализация
-#endif
 }
 
 void SocketOutput::disconnect() {
-#ifdef _WIN32
-    if (sockfd != INVALID_SOCKET) {
-        closesocket(sockfd);
-        sockfd = INVALID_SOCKET;
+    if (sockfd != -1) {
+        close(sockfd);
+        sockfd = -1;
     }
-#else
-    // Linux/Unix реализация
-#endif
 }
 
 //=== Journal_logger ===//
@@ -134,7 +116,7 @@ std::string Journal_logger::format_log(
 ) const {
     char time_buf[64];
     tm time_info;
-    localtime_s(&time_info, &timestamp);
+    localtime_r(&timestamp, &time_info);
     strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S", &time_info);
 
     const char* importance_str = "";
@@ -145,10 +127,4 @@ std::string Journal_logger::format_log(
     }
 
     return "[" + std::string(time_buf) + "] [" + importance_str + "] " + message;
-}
-
-importances parse_importance(const std::string& msg) {
-    if (msg.find("[LOW]") != std::string::npos) return importances::LOW;
-    if (msg.find("[HIGH]") != std::string::npos) return importances::HIGH;
-    return importances::MEDIUM;
 }

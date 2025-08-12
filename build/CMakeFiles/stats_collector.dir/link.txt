@@ -1,0 +1,1 @@
+/usr/bin/g++  -pthread -g CMakeFiles/stats_collector.dir/stats_collector.cpp.o -o stats_collector  -lpthread 

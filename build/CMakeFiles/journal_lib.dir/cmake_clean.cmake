@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/journal_lib.dir/journal_lib.cpp.obj"
-  "CMakeFiles/journal_lib.dir/journal_lib.cpp.obj.d"
+  "CMakeFiles/journal_lib.dir/journal_lib.cpp.o"
+  "CMakeFiles/journal_lib.dir/journal_lib.cpp.o.d"
   "libjournal_lib.a"
   "libjournal_lib.pdb"
 )

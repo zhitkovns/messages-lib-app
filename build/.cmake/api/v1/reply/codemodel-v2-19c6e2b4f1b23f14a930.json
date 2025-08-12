@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "journal_app",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "journal_app::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-journal_app-Debug-7d6ae9168c679f0f7522.json",
+					"name" : "journal_app",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "journal_lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-journal_lib-Debug-a8078a6d30c158b506ca.json",
+					"name" : "journal_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "stats_collector::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-stats_collector-Debug-c275fc5cc9705a5f3294.json",
+					"name" : "stats_collector",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/leviafan-desktop/Projects/messages-lib-app/build",
+		"source" : "/home/leviafan-desktop/Projects/messages-lib-app"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

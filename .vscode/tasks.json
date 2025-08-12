@@ -3,19 +3,23 @@
     "tasks": [
         {
             "label": "run-journal-file",
-            "type": "process",
-            "command": "${workspaceFolder}/build/journal_app.exe",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/journal_app",
             "args": ["log.txt", "MEDIUM"],
             "presentation": {
                 "reveal": "always",
                 "panel": "new",
                 "focus": true
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         },
         {
             "label": "run-stats-collector",
-            "type": "process",
-            "command": "${workspaceFolder}/build/stats_collector.exe",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/stats_collector",
             "args": ["8080", "5", "30"],
             "presentation": {
                 "reveal": "always",
@@ -27,8 +31,8 @@
         },
         {
             "label": "run-journal-socket",
-            "type": "process",
-            "command": "${workspaceFolder}/build/journal_app.exe",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/journal_app",
             "args": ["--socket", "127.0.0.1", "8080", "log.txt", "MEDIUM"],
             "presentation": {
                 "reveal": "always",

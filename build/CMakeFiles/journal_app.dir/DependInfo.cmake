@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Program Files (x86)/VS Code projects/messages_lib_app/journal_app.cpp" "CMakeFiles/journal_app.dir/journal_app.cpp.obj" "gcc" "CMakeFiles/journal_app.dir/journal_app.cpp.obj.d"
+  "/home/leviafan-desktop/Projects/messages-lib-app/journal_app.cpp" "CMakeFiles/journal_app.dir/journal_app.cpp.o" "gcc" "CMakeFiles/journal_app.dir/journal_app.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

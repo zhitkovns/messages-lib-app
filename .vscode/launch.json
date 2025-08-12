@@ -2,13 +2,40 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Program",
+      "name": "Launch Journal App (File Mode)",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/journal_app.exe",
-      "args": [],
+      "program": "${workspaceFolder}/build/journal_app",
+      "args": ["log.txt", "MEDIUM"],
       "cwd": "${workspaceFolder}",
-      "externalConsole": true
+      "externalConsole": false,
+      "linux": {
+        "MIMode": "gdb"
+      }
+    },
+    {
+      "name": "Launch Journal App (Socket Mode)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/journal_app",
+      "args": ["--socket", "127.0.0.1", "8080", "log.txt", "MEDIUM"],
+      "cwd": "${workspaceFolder}",
+      "externalConsole": false,
+      "linux": {
+        "MIMode": "gdb"
+      }
+    },
+    {
+      "name": "Launch Stats Collector",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/stats_collector",
+      "args": ["8080", "5", "30"],
+      "cwd": "${workspaceFolder}",
+      "externalConsole": false,
+      "linux": {
+        "MIMode": "gdb"
+      }
     }
   ]
 }

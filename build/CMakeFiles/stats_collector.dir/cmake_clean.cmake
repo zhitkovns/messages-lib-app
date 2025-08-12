@@ -1,9 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/stats_collector.dir/stats_collector.cpp.obj"
-  "CMakeFiles/stats_collector.dir/stats_collector.cpp.obj.d"
-  "libstats_collector.dll.a"
-  "stats_collector.exe"
-  "stats_collector.exe.manifest"
+  "CMakeFiles/stats_collector.dir/stats_collector.cpp.o"
+  "CMakeFiles/stats_collector.dir/stats_collector.cpp.o.d"
+  "stats_collector"
   "stats_collector.pdb"
 )
 

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Program Files (x86)/VS Code projects/messages_lib_app/stats_collector.cpp" "CMakeFiles/stats_collector.dir/stats_collector.cpp.obj" "gcc" "CMakeFiles/stats_collector.dir/stats_collector.cpp.obj.d"
+  "/home/leviafan-desktop/Projects/messages-lib-app/stats_collector.cpp" "CMakeFiles/stats_collector.dir/stats_collector.cpp.o" "gcc" "CMakeFiles/stats_collector.dir/stats_collector.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
