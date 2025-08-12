@@ -1,14 +1,20 @@
 [
 {
   "directory": "D:/Program Files (x86)/VS Code projects/messages_lib_app/build",
-  "command": "\"D:/Program Files (x86)/gcc/bin/g++.exe\"  @CMakeFiles/journal_lib.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles/journal_lib.dir/journal_lib.cpp.obj -c \"D:/Program Files (x86)/VS Code projects/messages_lib_app/journal_lib.cpp\"",
+  "command": "\"D:/Program Files (x86)/gcc/bin/g++.exe\"   -g -std=gnu++17 -o CMakeFiles/journal_lib.dir/journal_lib.cpp.obj -c \"D:/Program Files (x86)/VS Code projects/messages_lib_app/journal_lib.cpp\"",
   "file": "D:/Program Files (x86)/VS Code projects/messages_lib_app/journal_lib.cpp",
   "output": "CMakeFiles/journal_lib.dir/journal_lib.cpp.obj"
 },
 {
   "directory": "D:/Program Files (x86)/VS Code projects/messages_lib_app/build",
-  "command": "\"D:/Program Files (x86)/gcc/bin/g++.exe\"  @CMakeFiles/journal_app.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles/journal_app.dir/journal_app.cpp.obj -c \"D:/Program Files (x86)/VS Code projects/messages_lib_app/journal_app.cpp\"",
+  "command": "\"D:/Program Files (x86)/gcc/bin/g++.exe\"   -g -std=gnu++17 -o CMakeFiles/journal_app.dir/journal_app.cpp.obj -c \"D:/Program Files (x86)/VS Code projects/messages_lib_app/journal_app.cpp\"",
   "file": "D:/Program Files (x86)/VS Code projects/messages_lib_app/journal_app.cpp",
   "output": "CMakeFiles/journal_app.dir/journal_app.cpp.obj"
+},
+{
+  "directory": "D:/Program Files (x86)/VS Code projects/messages_lib_app/build",
+  "command": "\"D:/Program Files (x86)/gcc/bin/g++.exe\"   -g -std=gnu++17 -o CMakeFiles/stats_collector.dir/stats_collector.cpp.obj -c \"D:/Program Files (x86)/VS Code projects/messages_lib_app/stats_collector.cpp\"",
+  "file": "D:/Program Files (x86)/VS Code projects/messages_lib_app/stats_collector.cpp",
+  "output": "CMakeFiles/stats_collector.dir/stats_collector.cpp.obj"
 }
 ]

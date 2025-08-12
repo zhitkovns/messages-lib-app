@@ -1,19 +1,33 @@
 cmake_minimum_required(VERSION 3.10)
-project(JournalApp)
+project(journal_app)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 1. Библиотека (отдельная цель)
-add_library(journal_lib STATIC 
+if(WIN32)
+    set(WS2_LIB ws2_32)
+endif()
+
+
+# --- Библиотека для ведения журнала ---
+add_library(journal_lib STATIC
     journal_lib.cpp
     journal_lib.hpp
 )
-target_include_directories(journal_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# 2. Исполняемый файл (тестовое приложение - отдельная цель)
-add_executable(journal_app journal_app.cpp)
-target_link_libraries(journal_app PRIVATE journal_lib)
+target_link_libraries(journal_lib PRIVATE ${WS2_LIB})
 
-# Автоматическое копирование .exe в папку build
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+# --- Приложение для журнала ---
+add_executable(journal_app
+    journal_app.cpp
+)
+
+target_link_libraries(journal_app PRIVATE journal_lib ${WS2_LIB})
+
+
+# --- Приложение для сбора статистики ---
+add_executable(stats_collector
+    stats_collector.cpp
+)
+
+target_link_libraries(stats_collector PRIVATE ${WS2_LIB})

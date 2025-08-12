@@ -1,41 +1,54 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "CMake Build",
-      "type": "process",
-      "command": "cmake",
-      "args": [
-        "--build",
-        "${workspaceFolder}\\build",
-        "--config",
-        "Debug"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": ["$msCompile"],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "detail": "Сборка проекта через CMake"
-    },
-    {
-      "label": "Run Program",
-      "type": "process",
-      "command": "${workspaceFolder}\\build\\journal_app.exe",
-      "args": [
-        "log.txt",
-        "MEDIUM"
-      ],
-      "dependsOn": ["CMake Build"],
-      "problemMatcher": [],
-      "group": "test",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated"
-      }
-    }
-  ]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run-journal-file",
+            "type": "process",
+            "command": "${workspaceFolder}/build/journal_app.exe",
+            "args": ["log.txt", "MEDIUM"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "focus": true
+            }
+        },
+        {
+            "label": "run-stats-collector",
+            "type": "process",
+            "command": "${workspaceFolder}/build/stats_collector.exe",
+            "args": ["8080", "5", "30"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "group": "socket-group"
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "run-journal-socket",
+            "type": "process",
+            "command": "${workspaceFolder}/build/journal_app.exe",
+            "args": ["--socket", "127.0.0.1", "8080", "log.txt", "MEDIUM"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "group": "socket-group"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "run-full-program",
+            "dependsOrder": "parallel",
+            "dependsOn": [
+                "run-stats-collector",
+                "run-journal-socket"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        }
+    ]
 }

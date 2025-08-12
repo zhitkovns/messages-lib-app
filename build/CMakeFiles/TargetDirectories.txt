@@ -1,4 +1,5 @@
 D:/Program Files (x86)/VS Code projects/messages_lib_app/build/CMakeFiles/journal_lib.dir
 D:/Program Files (x86)/VS Code projects/messages_lib_app/build/CMakeFiles/journal_app.dir
+D:/Program Files (x86)/VS Code projects/messages_lib_app/build/CMakeFiles/stats_collector.dir
 D:/Program Files (x86)/VS Code projects/messages_lib_app/build/CMakeFiles/edit_cache.dir
 D:/Program Files (x86)/VS Code projects/messages_lib_app/build/CMakeFiles/rebuild_cache.dir

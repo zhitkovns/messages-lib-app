@@ -142,6 +142,19 @@ journal_app/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/journal_app.dir/build.make CMakeFiles/journal_app.dir/build
 .PHONY : journal_app/fast
 
+#=============================================================================
+# Target rules for targets named stats_collector
+
+# Build rule for target.
+stats_collector: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 stats_collector
+.PHONY : stats_collector
+
+# fast build rule for target.
+stats_collector/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_collector.dir/build.make CMakeFiles/stats_collector.dir/build
+.PHONY : stats_collector/fast
+
 journal_app.obj: journal_app.cpp.obj
 .PHONY : journal_app.obj
 
@@ -190,6 +203,30 @@ journal_lib.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/journal_lib.dir/build.make CMakeFiles/journal_lib.dir/journal_lib.cpp.s
 .PHONY : journal_lib.cpp.s
 
+stats_collector.obj: stats_collector.cpp.obj
+.PHONY : stats_collector.obj
+
+# target to build an object file
+stats_collector.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_collector.dir/build.make CMakeFiles/stats_collector.dir/stats_collector.cpp.obj
+.PHONY : stats_collector.cpp.obj
+
+stats_collector.i: stats_collector.cpp.i
+.PHONY : stats_collector.i
+
+# target to preprocess a source file
+stats_collector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_collector.dir/build.make CMakeFiles/stats_collector.dir/stats_collector.cpp.i
+.PHONY : stats_collector.cpp.i
+
+stats_collector.s: stats_collector.cpp.s
+.PHONY : stats_collector.s
+
+# target to generate assembly for a file
+stats_collector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_collector.dir/build.make CMakeFiles/stats_collector.dir/stats_collector.cpp.s
+.PHONY : stats_collector.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -200,12 +237,16 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... journal_app"
 	@echo "... journal_lib"
+	@echo "... stats_collector"
 	@echo "... journal_app.obj"
 	@echo "... journal_app.i"
 	@echo "... journal_app.s"
 	@echo "... journal_lib.obj"
 	@echo "... journal_lib.i"
 	@echo "... journal_lib.s"
+	@echo "... stats_collector.obj"
+	@echo "... stats_collector.i"
+	@echo "... stats_collector.s"
 .PHONY : help
 
 

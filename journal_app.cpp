@@ -9,30 +9,33 @@
 #include <condition_variable>
 #include <atomic>
 #include <functional>
+#include <memory>
+
+using namespace std;
 
 // Потокобезопасная очередь задач
 class LogQueue {
 public:
     struct Task {
-        std::string message;
+        string message;
         importances importance;
     };
 
     void push(Task task) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        m_queue.push(std::move(task));
+        lock_guard<mutex> lock(m_mutex);
+        m_queue.push(move(task));
         m_condition.notify_one();
     }
 
     bool pop(Task& task) {
-        std::unique_lock<std::mutex> lock(m_mutex);
+        unique_lock<mutex> lock(m_mutex);
         m_condition.wait(lock, [this]() { return !m_queue.empty() || m_stop; });
         
         if (m_stop && m_queue.empty()) {
             return false;
         }
         
-        task = std::move(m_queue.front());
+        task = move(m_queue.front());
         m_queue.pop();
         return true;
     }
@@ -43,24 +46,67 @@ public:
     }
 
 private:
-    std::queue<Task> m_queue;
-    std::mutex m_mutex;
-    std::condition_variable m_condition;
-    std::atomic<bool> m_stop{false};
+    queue<Task> m_queue;
+    mutex m_mutex;
+    condition_variable m_condition;
+    atomic<bool> m_stop{false};
 };
 
-// Менеджер логгирования
+// Базовый класс для логгеров
+class ILogger {
+public:
+    virtual ~ILogger() = default;
+    virtual void log(const string& message, importances importance) = 0;
+};
+
+// Только файловый логгер
+class FileLogger : public ILogger {
+public:
+    FileLogger(const string& filename, importances default_level)
+        : logger(filename, default_level) {}
+
+    void log(const string& message, importances importance) override {
+        logger.message_log(message, importance);
+    }
+
+private:
+    Journal_logger logger;
+};
+
+// Комбинированный логгер (сокет + файл)
+class SocketFileLogger : public ILogger {
+public:
+    SocketFileLogger(const string& host, int port, 
+                   const string& filename, importances default_level)
+        : socket_logger(host, port, default_level),
+          file_logger(filename, default_level) {}
+
+    void log(const string& message, importances importance) override {
+    try {
+        socket_logger.message_log(message, importance);
+    } catch (const runtime_error& e) {
+        cerr << "Socket error: " << e.what() << endl;
+        cerr << "Message saved to file only" << endl;
+    }
+    file_logger.message_log(message, importance); // Всегда пишем в файл
+}
+
+private:
+    Journal_logger socket_logger;
+    Journal_logger file_logger;
+};
+
+// Менеджер логгирования (переработанный)
 class LogManager {
 public:
-    LogManager(const std::string& filename, importances default_level)
-        : m_logger(filename, default_level) {}
+    LogManager(unique_ptr<ILogger> logger) : m_logger(move(logger)) {}
     
     ~LogManager() {
         stop();
     }
 
     void start() {
-        m_worker = std::thread(&LogManager::process_tasks, this);
+        m_worker = thread(&LogManager::process_tasks, this);
     }
 
     void stop() {
@@ -73,7 +119,7 @@ public:
         }
     }
 
-    void log(const std::string& message, importances importance) {
+    void log(const string& message, importances importance) {
         m_queue.push({message, importance});
     }
 
@@ -82,76 +128,112 @@ private:
         LogQueue::Task task;
         while (m_running) {
             if (m_queue.pop(task)) {
-                m_logger.message_log(task.message, task.importance);
+                m_logger->log(task.message, task.importance);
             }
         }
     }
 
-    Journal_logger m_logger;
+    unique_ptr<ILogger> m_logger;
     LogQueue m_queue;
-    std::thread m_worker;
-    std::atomic<bool> m_running{true};
+    thread m_worker;
+    atomic<bool> m_running{true};
 };
 
-// Обработчик пользовательского ввода
+// Обработчик ввода (без изменений)
 class InputHandler {
 public:
     InputHandler(LogManager& logger) : m_logger(logger) {}
 
     void run() {
-        std::string input;
+        string input;
         while (true) {
-            std::cout << "Enter message (or 'quit' to exit): ";
-            std::getline(std::cin, input);
+            cout << "Enter message (or 'quit' to exit): ";
+            getline(cin, input);
             
             if (input == "quit") {
                 break;
             }
 
-            std::cout << "Enter importance (LOW, MEDIUM, HIGH): ";
-            std::string importance_str;
-            std::getline(std::cin, importance_str);
-            std::transform(importance_str.begin(), 
-               importance_str.end(),
-               importance_str.begin(),
-               [](unsigned char c){ return std::toupper(c); });
-            importances importance = parse_importance(importance_str);
+            cout << "Enter importance (LOW, MEDIUM, HIGH): ";
+            string importance_str;
+            getline(cin, importance_str);
+            transform(importance_str.begin(), importance_str.end(),
+                     importance_str.begin(), ::toupper);
+            
+            importances importance = importances::MEDIUM;
+            if (importance_str == "LOW") importance = importances::LOW;
+            else if (importance_str == "HIGH") importance = importances::HIGH;
             
             m_logger.log(input, importance);
         }
     }
 
 private:
-    importances parse_importance(const std::string& str) {
-        if (str == "LOW") return importances::LOW;
-        if (str == "HIGH") return importances::HIGH;
-        return importances::MEDIUM; // default
-    }
-
     LogManager& m_logger;
 };
 
+void print_usage() {
+    cout << "Usage:\n"
+         << "  File mode: journal_app <filename> [default_importance]\n"
+         << "  Socket mode: journal_app --socket <host> <port> <filename> [default_importance]\n";
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cout << "Usage: " << argv[0] << " <logfile> [default_importance]\n";
+        print_usage();
         return 1;
     }
 
-    importances default_level = importances::MEDIUM;
-    if (argc > 2) {
-        std::string level_str = argv[2];
-        if (level_str == "LOW") default_level = importances::LOW;
-        else if (level_str == "HIGH") default_level = importances::HIGH;
+    try {
+        unique_ptr<ILogger> logger;
+        importances default_level = importances::MEDIUM;
+
+        // Режим сокета + файла
+        if (string(argv[1]) == "--socket") {
+            if (argc < 5) {
+                cerr << "Error: Socket mode requires host, port and filename\n";
+                return 1;
+            }
+
+            string host = argv[2];
+            int port = stoi(argv[3]);
+            string filename = argv[4];
+
+            if (argc > 5) {
+                string level_str = argv[5];
+                if (level_str == "LOW") default_level = importances::LOW;
+                else if (level_str == "HIGH") default_level = importances::HIGH;
+            }
+
+            logger = make_unique<SocketFileLogger>(host, port, filename, default_level);
+        } 
+        // Файловый режим
+        else {
+            string filename = argv[1];
+
+            if (argc > 2) {
+                string level_str = argv[2];
+                if (level_str == "LOW") default_level = importances::LOW;
+                else if (level_str == "HIGH") default_level = importances::HIGH;
+            }
+
+            logger = make_unique<FileLogger>(filename, default_level);
+        }
+
+        LogManager log_manager(move(logger));
+        log_manager.start();
+
+        {
+            InputHandler input(log_manager);
+            input.run();
+        }
+
+        log_manager.stop();
+    } 
+    catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
+        return 1;
     }
 
-    LogManager logger(argv[1], default_level);
-    logger.start();
-
-    {
-        InputHandler input(logger);
-        input.run();
-    }
-
-    logger.stop();
     return 0;
 }
