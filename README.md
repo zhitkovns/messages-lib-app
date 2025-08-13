@@ -155,8 +155,6 @@
 
 ## EN
 
-Here's the English translation of your documentation:
-
 ### 📌 Message Logging with Different Priority Levels
 
 #### 🔹 Project Objective
