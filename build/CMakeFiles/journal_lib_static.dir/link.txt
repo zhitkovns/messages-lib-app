@@ -1,0 +1,2 @@
+/usr/bin/ar qc libjournal_lib.a CMakeFiles/journal_lib_static.dir/journal_lib.cpp.o
+/usr/bin/ranlib libjournal_lib.a

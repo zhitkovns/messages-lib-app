@@ -1220,6 +1220,30 @@
 			],
 			"type" : "STATIC",
 			"value" : "general;pthread;"
+		},
+		{
+			"name" : "journal_lib_shared_LIB_DEPENDS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Dependencies for the target"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "general;pthread;"
+		},
+		{
+			"name" : "journal_lib_static_LIB_DEPENDS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Dependencies for the target"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "general;pthread;"
 		}
 	],
 	"kind" : "cache",

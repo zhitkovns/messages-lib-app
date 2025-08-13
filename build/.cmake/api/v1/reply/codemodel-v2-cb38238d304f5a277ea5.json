@@ -43,7 +43,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "journal_app::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-journal_app-Debug-79254b306c59dff0d74e.json",
+					"jsonFile" : "target-journal_app-Debug-1c6a71c359b74014991a.json",
 					"name" : "journal_app",
 					"projectIndex" : 0
 				},
@@ -57,7 +57,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "stats_collector::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-stats_collector-Debug-83c814456bff065971f5.json",
+					"jsonFile" : "target-stats_collector-Debug-7a1090930c5e9cc0bad8.json",
 					"name" : "stats_collector",
 					"projectIndex" : 0
 				}

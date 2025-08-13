@@ -229,6 +229,12 @@ journal_app_SOURCE_DIR:STATIC=/home/leviafan-desktop/Projects/messages-lib-app
 //Dependencies for the target
 journal_lib_LIB_DEPENDS:STATIC=general;pthread;
 
+//Dependencies for the target
+journal_lib_shared_LIB_DEPENDS:STATIC=general;pthread;
+
+//Dependencies for the target
+journal_lib_static_LIB_DEPENDS:STATIC=general;pthread;
+
 
 ########################
 # INTERNAL cache entries

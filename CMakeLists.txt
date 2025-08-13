@@ -5,12 +5,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 # Библиотека журналирования
-add_library(journal_lib STATIC
+add_library(journal_lib
     journal_lib.cpp
     journal_lib.hpp
 )
-target_include_directories(journal_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})  
+target_include_directories(journal_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(journal_lib PRIVATE pthread)
+
+set_target_properties(journal_lib PROPERTIES OUTPUT_NAME "journal_lib")
 
 # Основное приложение
 add_executable(journal_app
