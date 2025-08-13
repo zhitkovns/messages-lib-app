@@ -43,11 +43,7 @@ public:
 private:
     string host;
     int port;
-#ifdef _WIN32
-    SOCKET sockfd = INVALID_SOCKET;
-#else
     int sockfd = -1;
-#endif
     void connect();
     void disconnect();
 };
@@ -57,6 +53,9 @@ public:
     Journal_logger(const string& filename, importances importance);
     Journal_logger(const string& host, int port, importances importance);
     ~Journal_logger() = default;
+
+    Journal_logger(const Journal_logger&) = delete;
+    Journal_logger& operator=(const Journal_logger&) = delete;
 
     void message_log(const string& message, importances importance);
     void set_default_importance(importances new_importance);

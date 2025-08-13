@@ -16,17 +16,5 @@
   "command": "/usr/bin/g++  -I/home/leviafan-desktop/Projects/messages-lib-app  -pthread -g -std=gnu++17 -o CMakeFiles/stats_collector.dir/stats_collector.cpp.o -c /home/leviafan-desktop/Projects/messages-lib-app/stats_collector.cpp",
   "file": "/home/leviafan-desktop/Projects/messages-lib-app/stats_collector.cpp",
   "output": "CMakeFiles/stats_collector.dir/stats_collector.cpp.o"
-},
-{
-  "directory": "/home/leviafan-desktop/Projects/messages-lib-app/build",
-  "command": "/usr/bin/g++  -I/home/leviafan-desktop/Projects/messages-lib-app  -pthread -g -std=gnu++17 -o CMakeFiles/journal_tests.dir/tests/journal_tests.cpp.o -c /home/leviafan-desktop/Projects/messages-lib-app/tests/journal_tests.cpp",
-  "file": "/home/leviafan-desktop/Projects/messages-lib-app/tests/journal_tests.cpp",
-  "output": "CMakeFiles/journal_tests.dir/tests/journal_tests.cpp.o"
-},
-{
-  "directory": "/home/leviafan-desktop/Projects/messages-lib-app/build",
-  "command": "/usr/bin/g++  -I/home/leviafan-desktop/Projects/messages-lib-app  -pthread -g -std=gnu++17 -o CMakeFiles/stats_tests.dir/tests/stats_tests.cpp.o -c /home/leviafan-desktop/Projects/messages-lib-app/tests/stats_tests.cpp",
-  "file": "/home/leviafan-desktop/Projects/messages-lib-app/tests/stats_tests.cpp",
-  "output": "CMakeFiles/stats_tests.dir/tests/stats_tests.cpp.o"
 }
 ]

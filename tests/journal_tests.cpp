@@ -9,7 +9,6 @@
 #include <algorithm>
 #include <iostream>
 
-using namespace std;
 
 // Вспомогательные функции для тестирования
 string read_last_line(const string& filename) {

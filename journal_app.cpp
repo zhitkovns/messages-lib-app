@@ -11,7 +11,6 @@
 #include <functional>
 #include <memory>
 
-using namespace std;
 
 // Потокобезопасная очередь задач
 class LogQueue {
@@ -96,7 +95,7 @@ private:
     Journal_logger file_logger;
 };
 
-// Менеджер логгирования (переработанный)
+// Менеджер логгирования
 class LogManager {
 public:
     LogManager(unique_ptr<ILogger> logger) : m_logger(move(logger)) {}
@@ -139,32 +138,68 @@ private:
     atomic<bool> m_running{true};
 };
 
-// Обработчик ввода (без изменений)
+// Обработчик ввода
 class InputHandler {
 public:
     InputHandler(LogManager& logger) : m_logger(logger) {}
 
     void run() {
-        string input;
+        std::string input;
         while (true) {
-            cout << "Enter message (or 'quit' to exit): ";
-            getline(cin, input);
-            
-            if (input == "quit") {
-                break;
+            // Ввод сообщения
+            do {
+                std::cout << "Enter message (or 'quit' to exit): ";
+                std::getline(std::cin, input);
+                
+                if (input == "quit") {
+                    return;
+                }
+                
+                if (input.empty()) {
+                    std::cout << "Error: Message cannot be empty. Please try again.\n";
+                }
+            } while (input.empty());
+    
+            // Ввод уровня важности с проверкой
+            importances importance;
+            while (true) {
+                std::cout << "Enter importance (LOW, MEDIUM, HIGH): ";
+                std::string importance_str;
+                std::getline(std::cin, importance_str);
+                
+                // Приводим к верхнему регистру
+                std::transform(importance_str.begin(), importance_str.end(),
+                             importance_str.begin(), ::toupper);
+                
+                // Проверяем допустимые значения
+                if (importance_str == "LOW") {
+                    importance = importances::LOW;
+                    break;
+                } 
+                else if (importance_str == "MEDIUM") {
+                    importance = importances::MEDIUM;
+                    break;
+                }
+                else if (importance_str == "HIGH") {
+                    importance = importances::HIGH;
+                    break;
+                }
+                else if (importance_str.empty()){
+                    importance=importances::MEDIUM;
+                    break;
+                }
+                else {
+                    std::cout << "Error: Invalid importance level. "
+                              << "Please enter LOW, MEDIUM or HIGH.\n";
+                }
             }
-
-            cout << "Enter importance (LOW, MEDIUM, HIGH): ";
-            string importance_str;
-            getline(cin, importance_str);
-            transform(importance_str.begin(), importance_str.end(),
-                     importance_str.begin(), ::toupper);
             
-            importances importance = importances::MEDIUM;
-            if (importance_str == "LOW") importance = importances::LOW;
-            else if (importance_str == "HIGH") importance = importances::HIGH;
-            
-            m_logger.log(input, importance);
+            // Логирование сообщения
+            try {
+                m_logger.log(input, importance);
+            } catch (const std::exception& e) {
+                std::cerr << "Logging error: " << e.what() << std::endl;
+            }
         }
     }
 

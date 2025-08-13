@@ -20,7 +20,7 @@
             "label": "run-stats-collector",
             "type": "shell",
             "command": "${workspaceFolder}/build/stats_collector",
-            "args": ["8080", "5", "30"],
+            "args": ["8080", "5", "10"],
             "presentation": {
                 "reveal": "always",
                 "panel": "new",

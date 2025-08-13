@@ -12,10 +12,11 @@
 #include <unistd.h>
 #include <cstring>
 #include <cerrno>
+#include <mutex>
 
-using namespace std;
 
 struct MessageStats {
+    mutex stats_mutex; 
     size_t total = 0;
     size_t min_len = 0;
     size_t max_len = 0;
@@ -35,6 +36,8 @@ importances parse_importance(const string& msg) {
 }
 
 void update_stats(MessageStats& stats, const string& msg, time_t now) {
+    lock_guard<mutex> lock(stats.stats_mutex); 
+    
     stats.total++;
     const size_t len = msg.size();
     
@@ -57,22 +60,26 @@ void update_stats(MessageStats& stats, const string& msg, time_t now) {
     );
 }
 
-void print_stats(const MessageStats& stats) {
+void print_stats(MessageStats& stats) {  
+    lock_guard<mutex> lock(stats.stats_mutex); 
+    
     cout << "\n=== Statistics ===\n";
     cout << "Total messages: " << stats.total << "\n";
     cout << "By importance:\n"
-              << "  LOW:    " << stats.by_importance.at(importances::LOW) << "\n"
-              << "  MEDIUM: " << stats.by_importance.at(importances::MEDIUM) << "\n"
-              << "  HIGH:   " << stats.by_importance.at(importances::HIGH) << "\n";
+         << "  LOW:    " << stats.by_importance.at(importances::LOW) << "\n"
+         << "  MEDIUM: " << stats.by_importance.at(importances::MEDIUM) << "\n"
+         << "  HIGH:   " << stats.by_importance.at(importances::HIGH) << "\n";
     cout << "Last hour: " << stats.last_hour.size() << " messages\n";
     cout << "Message lengths:\n"
-              << "  Min: " << stats.min_len << "\n"
-              << "  Max: " << stats.max_len << "\n"
-              << "  Avg: " << stats.avg_len << "\n";
+         << "  Min: " << stats.min_len << "\n"
+         << "  Max: " << stats.max_len << "\n"
+         << "  Avg: " << stats.avg_len << "\n";
     cout << "=================\n";
 }
 
 int main(int argc, char* argv[]) {
+    time_t last_activity_time = time(nullptr); // Время последнего сообщения
+    size_t last_printed_total = 0; // Количество сообщений при последнем выводе
     if (argc < 4) {
         cout << "Usage: " << argv[0] << " <port> <N> <T>\n";
         return 1;
@@ -137,27 +144,47 @@ int main(int argc, char* argv[]) {
 
     char buffer[4096];
     while (true) {
-        int bytes_received = recv(client_socket, buffer, sizeof(buffer) - 1, 0);
-        if (bytes_received <= 0) {
-            if (bytes_received == 0) {
-                cout << "Client disconnected" << endl;
-            } else {
-                cerr << "Receive error: " << strerror(errno) << endl;
+        time_t now = time(nullptr);
+        
+        // Проверяем, нужно ли выводить статистику по таймауту
+        if (difftime(now, last_activity_time) >= T) {
+            if (stats.total > last_printed_total) {
+                print_stats(stats);
+                last_printed_total = stats.total;
             }
+            last_activity_time = now; // Сбрасываем таймер
+        }
+    
+        // Чтение сообщения с таймаутом
+        struct timeval tv;
+        tv.tv_sec = 1; // Таймаут 1 секунда
+        tv.tv_usec = 0;
+        setsockopt(client_socket, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
+    
+        int bytes_received = recv(client_socket, buffer, sizeof(buffer) - 1, 0);
+        
+        if (bytes_received > 0) {
+            // Обработка нового сообщения
+            buffer[bytes_received] = '\0';
+            string message(buffer);
+            
+            update_stats(stats, message, now);
+            cout << "Received: " << message << endl;
+            last_activity_time = now; // Обновляем время последней активности
+    
+            // Проверка вывода по количеству сообщений
+            if (stats.total % N == 0) {
+                print_stats(stats);
+                last_printed_total = stats.total;
+            }
+        }
+        else if (bytes_received == 0) {
+            cout << "Client disconnected" << endl;
             break;
         }
-
-        buffer[bytes_received] = '\0';
-        string message(buffer);
-        time_t now = time(nullptr);
-
-        update_stats(stats, message, now);
-        cout << "Received: " << message << endl;
-
-        // Проверяем условия вывода статистики
-        if ((stats.total % N == 0) || (difftime(now, last_print_time) >= T)) {
-            print_stats(stats);
-            last_print_time = now;
+        else if (errno != EAGAIN && errno != EWOULDBLOCK) {
+            cerr << "Receive error: " << strerror(errno) << endl;
+            break;
         }
     }
 

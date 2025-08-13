@@ -6,9 +6,7 @@
 #include <cerrno>
 #include <unistd.h>
 
-using namespace std;
-
-//=== FileOutput ===//
+// FileOutput
 FileOutput::FileOutput(const string& filename) 
     : filename(filename) {
     reopen();
@@ -38,7 +36,7 @@ void FileOutput::reopen() {
     }
 }
 
-//=== SocketOutput ===//
+// SocketOutput 
 SocketOutput::SocketOutput(const string& host, int port) 
     : host(host), port(port) {
     connect();
@@ -49,6 +47,7 @@ SocketOutput::~SocketOutput() {
 }
 
 void SocketOutput::write(const string& message) {
+    if (message.empty()) return;
     if (sockfd == -1) {
         try {
             connect();
@@ -93,7 +92,7 @@ void SocketOutput::disconnect() {
     }
 }
 
-//=== Journal_logger ===//
+// Journal_logger 
 Journal_logger::Journal_logger(const string& filename, importances importance)
     : output(make_unique<FileOutput>(filename)),
       default_importance(importance) {}
@@ -104,6 +103,9 @@ Journal_logger::Journal_logger(const string& host, int port, importances importa
 
 void Journal_logger::message_log(const string& message, importances importance) {
     if (importance < default_importance) return;
+    if (message.empty()) {
+        throw std::invalid_argument("Message cannot be empty");
+    }
 
     time_t now = time(nullptr);
     string formatted = format_log(message, importance, now);
@@ -121,6 +123,9 @@ string Journal_logger::format_log(
 ) const {
     char time_buf[64];
     tm time_info;
+    if (localtime_r(&timestamp, &time_info) == nullptr) {
+        throw std::runtime_error("Failed to convert time");
+    }
     localtime_r(&timestamp, &time_info);
     strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S", &time_info);
 

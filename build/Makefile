@@ -65,16 +65,6 @@ CMAKE_BINARY_DIR = /home/leviafan-desktop/Projects/messages-lib-app/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
@@ -165,32 +155,6 @@ stats_collector/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_collector.dir/build.make CMakeFiles/stats_collector.dir/build
 .PHONY : stats_collector/fast
 
-#=============================================================================
-# Target rules for targets named journal_tests
-
-# Build rule for target.
-journal_tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 journal_tests
-.PHONY : journal_tests
-
-# fast build rule for target.
-journal_tests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/journal_tests.dir/build.make CMakeFiles/journal_tests.dir/build
-.PHONY : journal_tests/fast
-
-#=============================================================================
-# Target rules for targets named stats_tests
-
-# Build rule for target.
-stats_tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 stats_tests
-.PHONY : stats_tests
-
-# fast build rule for target.
-stats_tests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_tests.dir/build.make CMakeFiles/stats_tests.dir/build
-.PHONY : stats_tests/fast
-
 journal_app.o: journal_app.cpp.o
 .PHONY : journal_app.o
 
@@ -263,54 +227,6 @@ stats_collector.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_collector.dir/build.make CMakeFiles/stats_collector.dir/stats_collector.cpp.s
 .PHONY : stats_collector.cpp.s
 
-tests/journal_tests.o: tests/journal_tests.cpp.o
-.PHONY : tests/journal_tests.o
-
-# target to build an object file
-tests/journal_tests.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/journal_tests.dir/build.make CMakeFiles/journal_tests.dir/tests/journal_tests.cpp.o
-.PHONY : tests/journal_tests.cpp.o
-
-tests/journal_tests.i: tests/journal_tests.cpp.i
-.PHONY : tests/journal_tests.i
-
-# target to preprocess a source file
-tests/journal_tests.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/journal_tests.dir/build.make CMakeFiles/journal_tests.dir/tests/journal_tests.cpp.i
-.PHONY : tests/journal_tests.cpp.i
-
-tests/journal_tests.s: tests/journal_tests.cpp.s
-.PHONY : tests/journal_tests.s
-
-# target to generate assembly for a file
-tests/journal_tests.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/journal_tests.dir/build.make CMakeFiles/journal_tests.dir/tests/journal_tests.cpp.s
-.PHONY : tests/journal_tests.cpp.s
-
-tests/stats_tests.o: tests/stats_tests.cpp.o
-.PHONY : tests/stats_tests.o
-
-# target to build an object file
-tests/stats_tests.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_tests.dir/build.make CMakeFiles/stats_tests.dir/tests/stats_tests.cpp.o
-.PHONY : tests/stats_tests.cpp.o
-
-tests/stats_tests.i: tests/stats_tests.cpp.i
-.PHONY : tests/stats_tests.i
-
-# target to preprocess a source file
-tests/stats_tests.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_tests.dir/build.make CMakeFiles/stats_tests.dir/tests/stats_tests.cpp.i
-.PHONY : tests/stats_tests.cpp.i
-
-tests/stats_tests.s: tests/stats_tests.cpp.s
-.PHONY : tests/stats_tests.s
-
-# target to generate assembly for a file
-tests/stats_tests.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/stats_tests.dir/build.make CMakeFiles/stats_tests.dir/tests/stats_tests.cpp.s
-.PHONY : tests/stats_tests.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -319,12 +235,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
 	@echo "... journal_app"
 	@echo "... journal_lib"
-	@echo "... journal_tests"
 	@echo "... stats_collector"
-	@echo "... stats_tests"
 	@echo "... journal_app.o"
 	@echo "... journal_app.i"
 	@echo "... journal_app.s"
@@ -334,12 +247,6 @@ help:
 	@echo "... stats_collector.o"
 	@echo "... stats_collector.i"
 	@echo "... stats_collector.s"
-	@echo "... tests/journal_tests.o"
-	@echo "... tests/journal_tests.i"
-	@echo "... tests/journal_tests.s"
-	@echo "... tests/stats_tests.o"
-	@echo "... tests/stats_tests.i"
-	@echo "... tests/stats_tests.s"
 .PHONY : help
 
 

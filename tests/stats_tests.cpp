@@ -12,7 +12,6 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-using namespace std;
 
 // Вспомогательная функция для создания тестового сервера
 class TestServer {
