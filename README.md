@@ -85,7 +85,7 @@
 ##### 🖥️ Запуск через VS Code
 В проекте настроены задачи для VS Code (см. `.vscode/tasks.json`):
 1. **Файловый режим** - логи пишутся только в файл:
-   - Ctrl + Shift + P => >Tasks: Run Task => `run-journal-file`
+   - `Ctrl+Shift+P` → `>Tasks: Run Task` → `run-journal-file`
    - Параметры по умолчанию: `log.txt MEDIUM`
 
 2. **Сетевой режим** - логи пишутся и в файл, и отправляются по сети:
@@ -190,146 +190,167 @@ LD_LIBRARY_PATH=. ./journal_app log.txt MEDIUM
 
 ## EN
 
-Here's the English translation of your documentation:
+### 📌 Message Logging with Different Priority Levels  
 
-### 📌 Message Logging with Different Priority Levels
+#### 🔹 Project Objective  
+Develop a library for logging messages with different priority levels and an application to demonstrate its functionality.  
 
-#### 🔹 Project Objective
-Develop a library for logging messages with different priority levels and an application demonstrating the library's functionality.
+#### 🔹 Tasks  
+**Part 1:**  
+Develop a library for logging text messages to a journal (text file).  
 
-#### 🔹 Tasks
-**Part 1:**
-Develop a library for logging text messages. Use a text file as the log.
+**Library Requirements:**  
+1) The library must support two build types: **static/dynamic**  
+2) During initialization, the library must accept:  
+   - Journal filename  
+   - Default message priority level (messages below this level are ignored)  
+   - Priority levels should use an enum with clear names (3 levels suffice)  
+3) Journal entries must include:  
+   - Message text  
+   - Priority level  
+   - Timestamp  
+4) Allow changing the default priority level post-initialization  
+5) (*):  
+   - Implement socket logging  
+   - Socket logging interface must match file logging  
 
-Library requirements:
-1) The library should have two build options: dynamic/static
-2) During initialization, the library should accept:
-   - Log filename
-   - Default message priority level (messages below this level won't be logged)
-   - Priority levels should use an enum with clear names (3 levels sufficient)
-3) Log entries must contain:
-   - Message text
-   - Priority level
-   - Timestamp
-4) Allow changing the default priority level after initialization
-5) (*):
-   - Implement socket logging
-   - Socket logging interface should match file logging interface
+**Part 2:**  
+Develop a multithreaded console application to test the library.  
 
-**Part 2:**
-Develop a console multithreaded application to test the logging library.
+**Application Requirements:**  
+1) The app must:  
+   - Use the Part 1 library  
+   - Accept user input (message + optional priority level)  
+   - Pass data to a separate thread for logging (thread-safe)  
+   - Await new input after processing  
+2) Command-line args: journal filename + default priority level  
+3) Internal logic is customizable  
 
-Application requirements:
-1) The application must:
-   - Use the library from Part 1
-   - Accept user input (message + optional priority level)
-   - Pass data to a separate thread for logging (thread-safe implementation)
-   - Wait for new user input after processing
-2) Command-line parameters: log filename and default priority level
-3) Internal logic can be custom implementation
+**Part 3 (*):**  
+Develop a console program to collect socket log statistics (from Part 1.5).  
 
-**Part 3 (*):**
-Develop a console program to collect statistics from socket data (from Part 1.5 logging).
+**Requirements:**  
+1) The program must:  
+   - Receive log data via socket  
+   - Display messages  
+   - Calculate:  
+     - Total messages  
+     - Messages by priority  
+     - Messages in the last hour  
+     - Message length stats (min/max/avg)  
+   - Display stats:  
+     - After every *N* messages  
+     - After *T*-second timeout (if stats changed)  
+2) Args: Socket params, *N*, *T*  
 
-Application requirements:
-1) The program must:
-   - Receive log data via socket
-   - Display received messages
-   - Calculate message statistics:
-     i. Total messages
-     ii. Messages by priority level
-     iii. Messages in last hour
-   - Calculate message length statistics:
-     i. Minimum
-     ii. Maximum
-     iii. Average
-   - Display statistics:
-     i. After every N messages
-     ii. After T seconds timeout (if statistics changed)
-2) Command-line parameters: socket connection details, N and T values
+(*) Optional but included in the project.  
 
-(*) - Optional but included in project
+---
 
-#### 🔹 Project Architecture
+#### 🔹 Project Architecture  
 ```
 .
-├── journal_lib.hpp       # Logging library
-├── journal_lib.cpp       # Library implementation
-├── journal_app.cpp       # Client application
-├── stats_collector.cpp   # Statistics collector
+├── journal_lib.hpp       # Logging library  
+├── journal_lib.cpp       # Library implementation  
+├── journal_app.cpp       # Client app  
+├── stats_collector.cpp   # Stats collector  
 └── tests/          
-    ├── journal_tests.cpp # Logging tests
-    └── stats_tests.cpp   # Statistics tests
+    ├── journal_tests.cpp # Logging tests  
+    └── stats_tests.cpp   # Stats tests  
 ```
-**Target OS: Linux** 
+**Target OS:** Linux  
 
-#### 🔹 How to Work with the Project
+---
 
-##### 🖥️ VS Code Launch
-Preconfigured tasks (see `.vscode/tasks.json`):
-1. **File mode** - logs to file only:
-   - Ctrl + Shift + P => >Tasks: Run Task => `run-journal-file`
-   - Default parameters: `log.txt MEDIUM`
+#### 🔹 How to Use  
 
-2. **Network mode** - logs to file and network:
-   - First launch `run-stats-collector` (stats server), then `run-journal-socket` (socket client)
-   - Or use `run-full-program` for combined launch
+##### 🖥️ VS Code Launch  
+Preconfigured tasks (see `.vscode/tasks.json`):  
+1. **File mode** (logs to file only):  
+   - `Ctrl+Shift+P` → `>Tasks: Run Task` → `run-journal-file`  
+   - Default args: `log.txt MEDIUM`  
 
-3. To change default priority level, modify `.vscode/tasks.json` and rebuild.
+2. **Network mode** (file + socket logging):  
+   - First launch `run-stats-collector` (stats server), then `run-journal-socket`  
+   - Or use `run-full-program` for combined launch  
 
-##### 💻 Terminal Launch
-1. Navigate to project directory:
-   ```
-   mkdir -p build && cd build
-   ```
-2. Build project:
-   ```
-   cmake .. && make
-   ```
-3. Launch modes (**):
-   
-   3.1. File mode:
-   ```
-   ./journal_app log.txt MEDIUM
-   ```
+3. To change default priority, edit `.vscode/tasks.json` and rebuild.  
 
-   3.2. Network mode (separate terminals):
+##### 💻 Terminal Launch  
+1. Navigate to the project:  
    ```
-   # Terminal 1 - stats server
-   ./stats_collector 8080 10 60
+   mkdir -p build && cd build  
+   cmake .. && make  
+   ```  
+2. **File mode**:  
+   ```
+   ./journal_app log.txt MEDIUM  
+   ```  
+3. **Network mode** (separate terminals):  
+   ```
+   # Terminal 1 (stats server):  
+   ./stats_collector 8080 10 60  
 
-   # Terminal 2 - socket client
-   ./journal_app --socket 127.0.0.1 8080 log.txt MEDIUM
-   ```
-(**) - You can specify custom log filename (will auto-create). Priority levels: LOW, MEDIUM, HIGH.
+   # Terminal 2 (socket client):  
+   ./journal_app --socket 127.0.0.1 8080 log.txt MEDIUM  
+   ```  
+   - Logfile auto-creates if missing. Priority levels: `LOW`/`MEDIUM`/`HIGH`.  
 
-#### 🔹 Key Actions
-- Enter messages in console
-- Specify priority level (LOW, MEDIUM, HIGH)
-- Type `quit` to exit
+---
 
-#### 🔹 Testing
-1. Navigate to project directory:
+#### 📚 Library Build Options  
+
+**Option A: Build & Run (All-in-One)**  
+```
+# Static build  
+cmake .. -DBUILD_SHARED_LIBS=OFF  
+make -j$(nproc)  
+./journal_app log.txt MEDIUM  
+
+# Dynamic build  
+cmake .. -DBUILD_SHARED_LIBS=ON  
+make -j$(nproc)  
+LD_LIBRARY_PATH=. ./journal_app log.txt MEDIUM  # Load .so from current dir  
+```  
+
+**Option B: Build Library Separately**  
+```
+# Build dynamic library only  
+cmake .. -DBUILD_SHARED_LIBS=ON  
+make journal_lib -j$(nproc)  
+
+# Build & link the app  
+make journal_app  
+LD_LIBRARY_PATH=. ./journal_app log.txt MEDIUM  
+```  
+
+**❗Note:**  
+- After switching build types:  
+  - Clean the build (`rm -rf build/*`) **or**  
+  - Re-run CMake with the new flag.  
+
+---
+
+#### 🔹 Key Actions  
+- Enter messages in the console  
+- Specify priority (`LOW`/`MEDIUM`/`HIGH`)  
+- Type `quit` to exit  
+
+---
+
+#### 🔹 Testing  
+1. Build with tests:  
    ```
-   mkdir -p build && cd build
+   cmake -DBUILD_TESTS=ON .. && make -j4  
+   ```  
+2. Run tests:  
    ```
-2. Build with tests:
+   ./journal_tests      # Logging tests  
+   ./stats_tests        # Stats tests  
+   ```  
+3. Disable tests:  
    ```
-   cmake -DBUILD_TESTS=ON .. && make -j4
-   ```
-3. Run tests:
-   
-   3.1. Logging tests:
-   ```
-   ./journal_tests
-   ```
-   3.2. Statistics tests:
-   ```
-   ./stats_tests
-   ```
-4. Disable tests after completion:
-   ```
-   cmake -DBUILD_TESTS=OFF .. 
-   ```
+   cmake -DBUILD_TESTS=OFF ..  
+   ```  
 
 --- 
