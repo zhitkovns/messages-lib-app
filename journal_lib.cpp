@@ -5,11 +5,24 @@
 #include <cstring>
 #include <cerrno>
 #include <unistd.h>
+#include <filesystem>
 
 // FileOutput
 FileOutput::FileOutput(const string& filename) 
     : filename(filename) {
-    reopen();
+    // Проверяем существует ли файл
+    bool file_exists = filesystem::exists(filename);
+    
+    // Открываем в бинарном режиме
+    log_file.open(filename, ios::app | ios::binary);
+    if (!log_file.is_open()) {
+        throw runtime_error("Cannot open file: " + filename);
+    }
+    
+    // Добавляем BOM только если файл новый
+    if (!file_exists && log_file.tellp() == 0) {
+        log_file << "\xEF\xBB\xBF";
+    }
 }
 
 FileOutput::~FileOutput() {

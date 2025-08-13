@@ -10,6 +10,8 @@
 #include <atomic>
 #include <functional>
 #include <memory>
+#include <filesystem>
+#include <locale>
 
 
 // Потокобезопасная очередь задач
@@ -56,6 +58,7 @@ class ILogger {
 public:
     virtual ~ILogger() = default;
     virtual void log(const string& message, importances importance) = 0;
+    virtual importances get_default_importance() const = 0;
 };
 
 // Только файловый логгер
@@ -66,6 +69,10 @@ public:
 
     void log(const string& message, importances importance) override {
         logger.message_log(message, importance);
+    }
+
+    importances get_default_importance() const override {
+        return logger.get_default_importance();
     }
 
 private:
@@ -81,14 +88,18 @@ public:
           file_logger(filename, default_level) {}
 
     void log(const string& message, importances importance) override {
-    try {
-        socket_logger.message_log(message, importance);
-    } catch (const runtime_error& e) {
-        cerr << "Socket error: " << e.what() << endl;
-        cerr << "Message saved to file only" << endl;
+        try {
+            socket_logger.message_log(message, importance);
+        } catch (const runtime_error& e) {
+            cerr << "Socket error: " << e.what() << endl;
+            cerr << "Message saved to file only" << endl;
+        }
+        file_logger.message_log(message, importance); // Всегда пишем в файл
     }
-    file_logger.message_log(message, importance); // Всегда пишем в файл
-}
+
+    importances get_default_importance() const override {
+        return file_logger.get_default_importance(); // Используем уровень из file_logger
+    }
 
 private:
     Journal_logger socket_logger;
@@ -121,6 +132,8 @@ public:
     void log(const string& message, importances importance) {
         m_queue.push({message, importance});
     }
+
+    ILogger& get_logger() { return *m_logger; }
 
 private:
     void process_tasks() {
@@ -185,7 +198,7 @@ public:
                     break;
                 }
                 else if (importance_str.empty()){
-                    importance=importances::MEDIUM;
+                    importance = m_logger.get_logger().get_default_importance();
                     break;
                 }
                 else {
@@ -213,7 +226,23 @@ void print_usage() {
          << "  Socket mode: journal_app --socket <host> <port> <filename> [default_importance]\n";
 }
 
+// Функция для получения абсолютного пути к файлу в папке проекта
+std::filesystem::path get_project_file_path(const std::string& filename) {
+    // Получаем путь к исполняемому файлу
+    std::filesystem::path exe_path = std::filesystem::canonical("/proc/self/exe"); // Для Linux
+    // Или для Windows: std::filesystem::path exe_path = std::filesystem::canonical(argv[0]);
+    
+    // Поднимаемся до папки проекта (из build/ или других подпапок)
+    std::filesystem::path project_dir = exe_path.parent_path(); // Из build/
+    if (project_dir.filename() == "build") {
+        project_dir = project_dir.parent_path(); // Поднимаемся в папку проекта
+    }
+    
+    return project_dir / filename;
+}
+
 int main(int argc, char* argv[]) {
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     if (argc < 2) {
         print_usage();
         return 1;
@@ -232,7 +261,7 @@ int main(int argc, char* argv[]) {
 
             string host = argv[2];
             int port = stoi(argv[3]);
-            string filename = argv[4];
+            string filename = get_project_file_path(argv[4]).string();
 
             if (argc > 5) {
                 string level_str = argv[5];
@@ -244,7 +273,7 @@ int main(int argc, char* argv[]) {
         } 
         // Файловый режим
         else {
-            string filename = argv[1];
+            string filename = get_project_file_path(argv[1]).string();
 
             if (argc > 2) {
                 string level_str = argv[2];

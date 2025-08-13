@@ -42,6 +42,10 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
   /usr/include/c++/13/bits/exception.h \
   /usr/include/c++/13/bits/exception_defines.h \
   /usr/include/c++/13/bits/exception_ptr.h \
+  /usr/include/c++/13/bits/fs_dir.h \
+  /usr/include/c++/13/bits/fs_fwd.h \
+  /usr/include/c++/13/bits/fs_ops.h \
+  /usr/include/c++/13/bits/fs_path.h \
   /usr/include/c++/13/bits/fstream.tcc \
   /usr/include/c++/13/bits/functexcept.h \
   /usr/include/c++/13/bits/functional_hash.h \
@@ -53,8 +57,11 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
   /usr/include/c++/13/bits/istream.tcc \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
+  /usr/include/c++/13/bits/locale_conv.h \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
+  /usr/include/c++/13/bits/locale_facets_nonio.h \
+  /usr/include/c++/13/bits/locale_facets_nonio.tcc \
   /usr/include/c++/13/bits/localefwd.h \
   /usr/include/c++/13/bits/memory_resource.h \
   /usr/include/c++/13/bits/memoryfwd.h \
@@ -68,12 +75,14 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
   /usr/include/c++/13/bits/postypes.h \
   /usr/include/c++/13/bits/predefined_ops.h \
   /usr/include/c++/13/bits/ptr_traits.h \
+  /usr/include/c++/13/bits/quoted_string.h \
   /usr/include/c++/13/bits/range_access.h \
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
   /usr/include/c++/13/bits/shared_ptr.h \
   /usr/include/c++/13/bits/shared_ptr_atomic.h \
   /usr/include/c++/13/bits/shared_ptr_base.h \
+  /usr/include/c++/13/bits/sstream.tcc \
   /usr/include/c++/13/bits/std_abs.h \
   /usr/include/c++/13/bits/std_function.h \
   /usr/include/c++/13/bits/std_mutex.h \
@@ -110,6 +119,7 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
   /usr/include/c++/13/cctype \
   /usr/include/c++/13/cerrno \
   /usr/include/c++/13/clocale \
+  /usr/include/c++/13/codecvt \
   /usr/include/c++/13/compare \
   /usr/include/c++/13/condition_variable \
   /usr/include/c++/13/cstddef \
@@ -130,14 +140,17 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
   /usr/include/c++/13/ext/numeric_traits.h \
   /usr/include/c++/13/ext/string_conversions.h \
   /usr/include/c++/13/ext/type_traits.h \
+  /usr/include/c++/13/filesystem \
   /usr/include/c++/13/fstream \
   /usr/include/c++/13/functional \
   /usr/include/c++/13/initializer_list \
+  /usr/include/c++/13/iomanip \
   /usr/include/c++/13/ios \
   /usr/include/c++/13/iosfwd \
   /usr/include/c++/13/iostream \
   /usr/include/c++/13/istream \
   /usr/include/c++/13/limits \
+  /usr/include/c++/13/locale \
   /usr/include/c++/13/memory \
   /usr/include/c++/13/mutex \
   /usr/include/c++/13/new \
@@ -148,6 +161,7 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
   /usr/include/c++/13/pstl/pstl_config.h \
   /usr/include/c++/13/queue \
   /usr/include/c++/13/ratio \
+  /usr/include/c++/13/sstream \
   /usr/include/c++/13/stdexcept \
   /usr/include/c++/13/streambuf \
   /usr/include/c++/13/string \
@@ -164,6 +178,7 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
   /usr/include/errno.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
+  /usr/include/libintl.h \
   /usr/include/linux/close_range.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/posix_types.h \
@@ -271,7 +286,9 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
   /usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
@@ -296,7 +313,11 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
+/usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h:
+
 /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h:
 
@@ -318,41 +339,53 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
-/usr/include/c++/13/ext/concurrence.h:
+/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
-/usr/include/c++/13/pstl/glue_algorithm_defs.h:
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
 
-/usr/include/c++/13/cctype:
+/usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
-/usr/include/asm-generic/bitsperlong.h:
+/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
-/usr/include/c++/13/debug/assertions.h:
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h:
 
 /usr/include/c++/13/ctime:
 
+/usr/include/c++/13/codecvt:
+
 /usr/include/c++/13/deque:
 
-/usr/include/c++/13/cstdlib:
-
-/usr/include/c++/13/cstdint:
-
 /usr/include/c++/13/cstdio:
+
+/usr/include/c++/13/bits/fs_path.h:
 
 /usr/include/c++/13/fstream:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
-
-/usr/include/c++/13/bits/predefined_ops.h:
-
-/usr/include/c++/13/iosfwd:
 
 /usr/include/c++/13/clocale:
 
 /usr/include/c++/13/cerrno:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-least.h:
+
+/usr/include/c++/13/cstdint:
+
+/usr/include/c++/13/cstdlib:
+
+/usr/include/c++/13/cctype:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
+
+/usr/include/c++/13/ext/atomicity.h:
 
 /usr/include/c++/13/bits/vector.tcc:
 
@@ -370,15 +403,19 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/c++/13/bits/align.h:
 
-/usr/include/x86_64-linux-gnu/bits/waitflags.h:
-
 /usr/include/c++/13/bits/streambuf.tcc:
 
 /usr/include/c++/13/bits/unordered_map.h:
 
+/usr/include/c++/13/bits/quoted_string.h:
+
 /usr/include/c++/13/bits/new_allocator.h:
 
 /usr/include/c++/13/bits/stl_uninitialized.h:
+
+/usr/include/c++/13/locale:
+
+/usr/include/c++/13/filesystem:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
 
@@ -396,13 +433,15 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/c++/13/cstddef:
 
-/usr/include/c++/13/bits/stl_pair.h:
-
-/usr/include/x86_64-linux-gnu/bits/errno.h:
-
 /usr/include/c++/13/bits/uses_allocator.h:
 
 /usr/include/c++/13/bits/postypes.h:
+
+/usr/include/c++/13/iomanip:
+
+/usr/include/c++/13/bits/sstream.tcc:
+
+/usr/include/c++/13/ratio:
 
 /usr/include/c++/13/bits/shared_ptr_atomic.h:
 
@@ -430,7 +469,15 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/c++/13/bits/ostream.tcc:
 
-/usr/include/c++/13/ratio:
+/usr/include/c++/13/bits/move.h:
+
+/usr/include/asm-generic/sockios.h:
+
+/usr/include/c++/13/bits/memoryfwd.h:
+
+/usr/include/c++/13/bits/fs_fwd.h:
+
+/usr/include/c++/13/bits/locale_facets_nonio.tcc:
 
 /usr/include/c++/13/bits/stl_queue.h:
 
@@ -441,12 +488,6 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 /usr/include/c++/13/bits/atomic_lockfree_defines.h:
 
 /usr/include/x86_64-linux-gnu/asm/errno.h:
-
-/usr/include/c++/13/ext/numeric_traits.h:
-
-/usr/include/c++/13/bits/stl_iterator.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
 /usr/include/c++/13/bits/locale_facets.h:
 
@@ -464,31 +505,25 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
-/usr/include/asm-generic/sockios.h:
-
-/usr/include/c++/13/bits/move.h:
-
 /usr/include/c++/13/backward/binders.h:
 
-/usr/include/locale.h:
+/usr/include/c++/13/bits/basic_ios.tcc:
 
-/usr/include/x86_64-linux-gnu/asm/bitsperlong.h:
+/usr/include/c++/13/pstl/execution_defs.h:
 
-/usr/include/c++/13/bits/utility.h:
-
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+/usr/include/linux/stddef.h:
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
 /usr/include/c++/13/bits/algorithmfwd.h:
 
-/usr/include/c++/13/ext/aligned_buffer.h:
-
-/home/leviafan-desktop/Projects/messages-lib-app/journal_app.cpp:
-
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
 /usr/include/c++/13/bits/node_handle.h:
+
+/usr/include/c++/13/bits/predefined_ops.h:
+
+/usr/include/c++/13/iosfwd:
 
 /usr/include/wchar.h:
 
@@ -528,15 +563,11 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/alloca.h:
 
-/usr/include/c++/13/ext/alloc_traits.h:
-
-/usr/include/c++/13/new:
-
 /usr/include/c++/13/bits/alloc_traits.h:
 
 /usr/include/c++/13/bits/concept_check.h:
 
-/usr/include/c++/13/bits/istream.tcc:
+/usr/include/c++/13/bits/fs_ops.h:
 
 /usr/include/c++/13/bits/exception_ptr.h:
 
@@ -555,6 +586,8 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 /usr/include/c++/13/atomic:
 
 /usr/include/c++/13/bits/basic_string.h:
+
+/usr/include/libintl.h:
 
 /usr/include/c++/13/bits/chrono.h:
 
@@ -588,11 +621,13 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
+/usr/include/c++/13/bits/istream.tcc:
+
+/usr/include/c++/13/bits/locale_conv.h:
+
 /usr/include/c++/13/bits/streambuf_iterator.h:
 
 /usr/include/c++/13/ostream:
-
-/usr/include/x86_64-linux-gnu/bits/confname.h:
 
 /usr/include/c++/13/bits/cpp_type_traits.h:
 
@@ -608,11 +643,21 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/linux/posix_types.h:
 
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/usr/include/c++/13/bits/exception_defines.h:
+
 /usr/include/c++/13/bits/cxxabi_init_exception.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
 
 /usr/include/c++/13/typeinfo:
+
+/usr/include/time.h:
+
+/usr/include/x86_64-linux-gnu/bits/setjmp.h:
+
+/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
 
 /usr/include/c++/13/bits/exception.h:
 
@@ -624,21 +669,19 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
-/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
+/usr/include/x86_64-linux-gnu/bits/confname.h:
 
-/usr/include/c++/13/bits/basic_ios.tcc:
+/usr/include/c++/13/bits/locale_facets_nonio.h:
 
-/usr/include/c++/13/pstl/execution_defs.h:
-
-/usr/include/linux/stddef.h:
-
-/usr/include/c++/13/bits/functional_hash.h:
-
-/usr/include/errno.h:
+/usr/include/c++/13/bits/fs_dir.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
 /usr/include/c++/13/bits/hashtable.h:
+
+/usr/include/c++/13/bits/functional_hash.h:
+
+/usr/include/errno.h:
 
 /usr/include/c++/13/bits/ios_base.h:
 
@@ -646,13 +689,41 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/c++/13/bits/locale_classes.tcc:
 
-/usr/include/c++/13/bits/memoryfwd.h:
+/usr/include/c++/13/debug/assertions.h:
 
-/usr/include/x86_64-linux-gnu/bits/setjmp.h:
+/usr/include/c++/13/bits/stl_pair.h:
 
-/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
+/usr/include/x86_64-linux-gnu/bits/errno.h:
 
-/usr/include/time.h:
+/home/leviafan-desktop/Projects/messages-lib-app/journal_app.cpp:
+
+/usr/include/c++/13/ext/aligned_buffer.h:
+
+/usr/include/locale.h:
+
+/usr/include/x86_64-linux-gnu/asm/bitsperlong.h:
+
+/usr/include/c++/13/bits/utility.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+
+/usr/include/c++/13/ext/alloc_traits.h:
+
+/usr/include/c++/13/new:
+
+/usr/include/c++/13/ext/concurrence.h:
+
+/usr/include/c++/13/pstl/glue_algorithm_defs.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
+
+/usr/include/c++/13/bits/stl_iterator.h:
+
+/usr/include/c++/13/ext/numeric_traits.h:
+
+/usr/include/asm-generic/bitsperlong.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
 
 /usr/include/c++/13/ext/string_conversions.h:
 
@@ -725,8 +796,6 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 /home/leviafan-desktop/Projects/messages-lib-app/journal_lib.hpp:
 
 /usr/include/c++/13/vector:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h:
 
 /usr/include/ctype.h:
 
@@ -822,26 +891,8 @@ CMakeFiles/journal_app.dir/journal_app.cpp.o: /home/leviafan-desktop/Projects/me
 
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
 
+/usr/include/c++/13/sstream:
+
 /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
-
-/usr/include/c++/13/ext/atomicity.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/typesizes.h:
-
-/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
-
-/usr/include/c++/13/bits/exception_defines.h:
-
-/usr/include/x86_64-linux-gnu/bits/waitstatus.h:

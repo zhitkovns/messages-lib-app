@@ -59,6 +59,9 @@ public:
 
     void message_log(const string& message, importances importance);
     void set_default_importance(importances new_importance);
+    importances get_default_importance() const {
+        return default_importance;
+    }
 
 private:
     unique_ptr<LogOutput> output;
