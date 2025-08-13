@@ -92,6 +92,7 @@ stats_collector_EXTERNAL_OBJECTS =
 
 stats_collector: CMakeFiles/stats_collector.dir/stats_collector.cpp.o
 stats_collector: CMakeFiles/stats_collector.dir/build.make
+stats_collector: libjournal_lib.a
 stats_collector: CMakeFiles/stats_collector.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable stats_collector"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/stats_collector.dir/link.txt --verbose=$(VERBOSE)

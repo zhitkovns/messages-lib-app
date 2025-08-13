@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/leviafan-desktop/Projects/messages-lib-app
 
 CXX_FLAGS =  -pthread -g -std=gnu++17
 

@@ -1,0 +1,1 @@
+/usr/bin/g++  -pthread -g CMakeFiles/journal_tests.dir/tests/journal_tests.cpp.o -o journal_tests  libjournal_lib.a -lpthread 

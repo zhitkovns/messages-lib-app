@@ -1,5 +1,8 @@
 /home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles/journal_lib.dir
 /home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles/journal_app.dir
 /home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles/stats_collector.dir
+/home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles/journal_tests.dir
+/home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles/stats_tests.dir
+/home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles/test.dir
 /home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles/edit_cache.dir
 /home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles/rebuild_cache.dir

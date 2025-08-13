@@ -17,7 +17,9 @@
 					[
 						0,
 						1,
-						2
+						2,
+						3,
+						4
 					]
 				}
 			],
@@ -34,7 +36,9 @@
 					[
 						0,
 						1,
-						2
+						2,
+						3,
+						4
 					]
 				}
 			],
@@ -43,22 +47,36 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "journal_app::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-journal_app-Debug-7d6ae9168c679f0f7522.json",
+					"jsonFile" : "target-journal_app-Debug-79254b306c59dff0d74e.json",
 					"name" : "journal_app",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "journal_lib::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-journal_lib-Debug-a8078a6d30c158b506ca.json",
+					"jsonFile" : "target-journal_lib-Debug-6f5b7f5f80b7f642702f.json",
 					"name" : "journal_lib",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
+					"id" : "journal_tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-journal_tests-Debug-0170ba38c57b08283fd5.json",
+					"name" : "journal_tests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
 					"id" : "stats_collector::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-stats_collector-Debug-c275fc5cc9705a5f3294.json",
+					"jsonFile" : "target-stats_collector-Debug-83c814456bff065971f5.json",
 					"name" : "stats_collector",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "stats_tests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-stats_tests-Debug-7e2b1df706ce41e4bb9c.json",
+					"name" : "stats_tests",
 					"projectIndex" : 0
 				}
 			]

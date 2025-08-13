@@ -3,49 +3,45 @@
 #include <ctime>
 #include <fstream>
 #include <memory>
-
-#ifdef _WIN32
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#else
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#endif
+
+using namespace std;
 
 enum class importances { LOW, MEDIUM, HIGH };
-importances parse_importance(const std::string& msg);
+importances parse_importance(const string& msg);
 
 class LogOutput {
 public:
     virtual ~LogOutput() = default;
-    virtual void write(const std::string& message) = 0;
+    virtual void write(const string& message) = 0;
     virtual bool is_connected() const = 0;
 };
 
 class FileOutput : public LogOutput {
 public:
-    FileOutput(const std::string& filename);
+    FileOutput(const string& filename);
     ~FileOutput() override;
-    void write(const std::string& message) override;
+    void write(const string& message) override;
     bool is_connected() const override;
 
 private:
-    std::string filename;
-    std::ofstream log_file;
+    string filename;
+    ofstream log_file;
     void reopen();
 };
 
 class SocketOutput : public LogOutput {
 public:
-    SocketOutput(const std::string& host, int port);
+    SocketOutput(const string& host, int port);
     ~SocketOutput() override;
-    void write(const std::string& message) override;
+    void write(const string& message) override;
     bool is_connected() const override;
 
 private:
-    std::string host;
+    string host;
     int port;
 #ifdef _WIN32
     SOCKET sockfd = INVALID_SOCKET;
@@ -58,20 +54,19 @@ private:
 
 class Journal_logger {
 public:
-    Journal_logger(const std::string& filename, importances importance);
-    Journal_logger(const std::string& host, int port, importances importance);
+    Journal_logger(const string& filename, importances importance);
+    Journal_logger(const string& host, int port, importances importance);
     ~Journal_logger() = default;
 
-    void message_log(const std::string& message, importances importance);
-    void message_log(const std::string& message);
+    void message_log(const string& message, importances importance);
     void set_default_importance(importances new_importance);
 
 private:
-    std::unique_ptr<LogOutput> output;
+    unique_ptr<LogOutput> output;
     importances default_importance;
 
-    std::string format_log(
-        const std::string& message, 
+    string format_log(
+        const string& message, 
         importances importance, 
         time_t timestamp
     ) const;

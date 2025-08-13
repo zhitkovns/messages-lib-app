@@ -6,8 +6,10 @@
 #include <cerrno>
 #include <unistd.h>
 
+using namespace std;
+
 //=== FileOutput ===//
-FileOutput::FileOutput(const std::string& filename) 
+FileOutput::FileOutput(const string& filename) 
     : filename(filename) {
     reopen();
 }
@@ -18,11 +20,11 @@ FileOutput::~FileOutput() {
     }
 }
 
-void FileOutput::write(const std::string& message) {
+void FileOutput::write(const string& message) {
     if (!log_file.is_open()) {
         reopen();
     }
-    log_file << message << std::endl;
+    log_file << message << endl;
 }
 
 bool FileOutput::is_connected() const {
@@ -30,14 +32,14 @@ bool FileOutput::is_connected() const {
 }
 
 void FileOutput::reopen() {
-    log_file.open(filename, std::ios::app);
+    log_file.open(filename, ios::app);
     if (!log_file.is_open()) {
-        throw std::runtime_error("Cannot open file: " + filename);
+        throw runtime_error("Cannot open file: " + filename);
     }
 }
 
 //=== SocketOutput ===//
-SocketOutput::SocketOutput(const std::string& host, int port) 
+SocketOutput::SocketOutput(const string& host, int port) 
     : host(host), port(port) {
     connect();
 }
@@ -46,19 +48,19 @@ SocketOutput::~SocketOutput() {
     disconnect();
 }
 
-void SocketOutput::write(const std::string& message) {
+void SocketOutput::write(const string& message) {
     if (sockfd == -1) {
         try {
             connect();
-        } catch (const std::runtime_error& e) {
-            throw std::runtime_error("Reconnect failed: " + std::string(e.what()));
+        } catch (const runtime_error& e) {
+            throw runtime_error("Reconnect failed: " + string(e.what()));
         }
     }
 
     int result = send(sockfd, message.c_str(), message.size(), 0);
     if (result == -1) {
         disconnect();
-        throw std::runtime_error("Socket send failed: " + std::string(strerror(errno)));
+        throw runtime_error("Socket send failed: " + string(strerror(errno)));
     }
 }
 
@@ -69,7 +71,7 @@ bool SocketOutput::is_connected() const {
 void SocketOutput::connect() {
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
-        throw std::runtime_error("Socket creation failed: " + std::string(strerror(errno)));
+        throw runtime_error("Socket creation failed: " + string(strerror(errno)));
     }
 
     sockaddr_in serverAddr;
@@ -80,7 +82,7 @@ void SocketOutput::connect() {
     if (::connect(sockfd, (sockaddr*)&serverAddr, sizeof(serverAddr))) {
         close(sockfd);
         sockfd = -1;
-        throw std::runtime_error("Connection failed: " + std::string(strerror(errno)));
+        throw runtime_error("Connection failed: " + string(strerror(errno)));
     }
 }
 
@@ -92,25 +94,28 @@ void SocketOutput::disconnect() {
 }
 
 //=== Journal_logger ===//
-Journal_logger::Journal_logger(const std::string& filename, importances importance)
-    : output(std::make_unique<FileOutput>(filename)),
+Journal_logger::Journal_logger(const string& filename, importances importance)
+    : output(make_unique<FileOutput>(filename)),
       default_importance(importance) {}
 
-Journal_logger::Journal_logger(const std::string& host, int port, importances importance)
-    : output(std::make_unique<SocketOutput>(host, port)),
+Journal_logger::Journal_logger(const string& host, int port, importances importance)
+    : output(make_unique<SocketOutput>(host, port)),
       default_importance(importance) {}
 
-void Journal_logger::message_log(const std::string& message, importances importance) {
+void Journal_logger::message_log(const string& message, importances importance) {
     if (importance < default_importance) return;
-    if (message.empty() || message[0]=='\n') return;
 
     time_t now = time(nullptr);
-    std::string formatted = format_log(message, importance, now);
+    string formatted = format_log(message, importance, now);
     output->write(formatted);
 }
 
-std::string Journal_logger::format_log(
-    const std::string& message, 
+void Journal_logger::set_default_importance(importances new_importance) {
+    default_importance = new_importance;
+}
+
+string Journal_logger::format_log(
+    const string& message, 
     importances importance, 
     time_t timestamp
 ) const {
@@ -126,5 +131,5 @@ std::string Journal_logger::format_log(
         case importances::HIGH:   importance_str = "HIGH";   break;
     }
 
-    return "[" + std::string(time_buf) + "] [" + importance_str + "] " + message;
+    return "[" + string(time_buf) + "] [" + importance_str + "] " + message;
 }
