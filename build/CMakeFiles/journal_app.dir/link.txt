@@ -1,1 +1,1 @@
-/usr/bin/g++  -pthread -g CMakeFiles/journal_app.dir/journal_app.cpp.o -o journal_app  libjournal_lib.a -lpthread 
+/usr/bin/g++  -pthread -g CMakeFiles/journal_app.dir/journal_app.cpp.o -o journal_app  -Wl,-rpath,/home/leviafan-desktop/Projects/messages-lib-app/build libjournal_lib.so 

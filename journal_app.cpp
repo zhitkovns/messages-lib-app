@@ -13,6 +13,7 @@
 #include <filesystem>
 #include <locale>
 
+using namespace std;
 
 // Потокобезопасная очередь задач
 class LogQueue {

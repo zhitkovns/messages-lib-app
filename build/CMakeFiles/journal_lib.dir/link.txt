@@ -1,2 +1,1 @@
-/usr/bin/ar qc libjournal_lib.a CMakeFiles/journal_lib.dir/journal_lib.cpp.o
-/usr/bin/ranlib libjournal_lib.a
+/usr/bin/g++ -fPIC  -pthread -g -shared -Wl,-soname,libjournal_lib.so -o libjournal_lib.so CMakeFiles/journal_lib.dir/journal_lib.cpp.o  -lpthread 

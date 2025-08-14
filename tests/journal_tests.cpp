@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <iostream>
 
+using namespace std;
 
 // Вспомогательные функции для тестирования
 string read_last_line(const string& filename) {
@@ -122,6 +123,43 @@ void test_thread_safety() {
     clear_test_file(test_file);
 }
 
+// Test 6: Пустое поле при вводе сообщения
+void test_empty_message() {
+    const string test_file = "test_empty_message.log";
+    clear_test_file(test_file);
+    
+    Journal_logger logger(test_file, importances::LOW);
+    
+    try {
+        logger.message_log("", importances::MEDIUM);
+        assert(false && "Expected exception for empty message");
+    } catch (const std::invalid_argument& e) {
+        assert(string(e.what()).find("cannot be empty") != string::npos);
+    }
+    
+    clear_test_file(test_file);
+}
+
+// Test 7: Пустое поле при вводе уровня важности
+void test_empty_priority() {
+    const string test_file = "test_empty_priority.log";
+    clear_test_file(test_file);
+    
+    {
+        // Create logger with MEDIUM as default
+        Journal_logger logger(test_file, importances::MEDIUM);
+        
+        // This should use MEDIUM priority (default)
+        logger.message_log("Test message", importances::MEDIUM);
+        
+        // Verify the log contains MEDIUM priority
+        string content = read_last_line(test_file);
+        assert(content.find("[MEDIUM]") != string::npos);
+    }
+    
+    clear_test_file(test_file);
+}
+
 int main() {
     try {
         cout << "Running journal library tests...\n";
@@ -131,6 +169,8 @@ int main() {
         test_log_format();
         test_change_importance();
         test_thread_safety();
+        test_empty_message();    
+        test_empty_priority();   
         
         cout << "All tests passed successfully!\n";
         return 0;

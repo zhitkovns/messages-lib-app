@@ -85,11 +85,12 @@
 ##### 🖥️ Запуск через VS Code
 В проекте настроены задачи для VS Code (см. `.vscode/tasks.json`):
 1. **Файловый режим** - логи пишутся только в файл:
-   - `Ctrl+Shift+P` → `>Tasks: Run Task` → `run-journal-file`
+   - Сборка проекта: `Ctrl+Shift+P` → `>CMake: Build`
+   - Запуск: `Ctrl+Shift+P` → `>Tasks: Run Task` → `run-journal-file`
    - Параметры по умолчанию: `log.txt MEDIUM`
 
 2. **Сетевой режим** - логи пишутся и в файл, и отправляются по сети:
-   - Запуск аналогично п. 1
+   - Запуск и сборка аналогично п. 1
    - Сначала запустите `run-stats-collector` (сервер статистики), `run-journal-socket` (клиент с сокетами)
    - Или `run-full-program` для одновременного запуска
 
@@ -288,10 +289,12 @@ Develop a console program to collect socket log statistics (from Part 1.5).
 ##### 🖥️ VS Code Launch  
 Preconfigured tasks (see `.vscode/tasks.json`):  
 1. **File mode** (logs to file only):  
-   - `Ctrl+Shift+P` → `>Tasks: Run Task` → `run-journal-file`  
+   - Building: `Ctrl+Shift+P` → `>CMake: Build`
+   - Launch: `Ctrl+Shift+P` → `>Tasks: Run Task` → `run-journal-file`  
    - Default args: `log.txt MEDIUM`  
 
 2. **Network mode** (file + socket logging):  
+   - Launch and Build in the same way as item 1
    - First launch `run-stats-collector` (stats server), then `run-journal-socket`  
    - Or use `run-full-program` for combined launch  
 

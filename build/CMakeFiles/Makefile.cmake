@@ -47,4 +47,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/journal_lib.dir/DependInfo.cmake"
   "CMakeFiles/journal_app.dir/DependInfo.cmake"
   "CMakeFiles/stats_collector.dir/DependInfo.cmake"
+  "CMakeFiles/journal_tests.dir/DependInfo.cmake"
+  "CMakeFiles/stats_tests.dir/DependInfo.cmake"
   )

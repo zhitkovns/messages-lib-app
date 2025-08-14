@@ -14,6 +14,7 @@
 #include <cerrno>
 #include <mutex>
 
+using namespace std;
 
 struct MessageStats {
     mutex stats_mutex; 

@@ -92,7 +92,7 @@ journal_tests_EXTERNAL_OBJECTS =
 
 journal_tests: CMakeFiles/journal_tests.dir/tests/journal_tests.cpp.o
 journal_tests: CMakeFiles/journal_tests.dir/build.make
-journal_tests: libjournal_lib.a
+journal_tests: libjournal_lib.so
 journal_tests: CMakeFiles/journal_tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable journal_tests"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/journal_tests.dir/link.txt --verbose=$(VERBOSE)

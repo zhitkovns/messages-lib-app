@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <filesystem>
 
+using namespace std;
+
 // FileOutput
 FileOutput::FileOutput(const string& filename) 
     : filename(filename) {

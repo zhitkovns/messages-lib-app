@@ -11,63 +11,68 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <atomic>
+#include <memory>
 
+using namespace std;
 
-// Вспомогательная функция для создания тестового сервера
-class TestServer {
-    int server_fd;
-    int port;
-public:
-    TestServer(int port) : port(port) {
-        server_fd = socket(AF_INET, SOCK_STREAM, 0);
-        sockaddr_in address{};
-        address.sin_family = AF_INET;
-        address.sin_addr.s_addr = INADDR_ANY;
-        address.sin_port = htons(port);
+// Глобальный счетчик для уникальных портов
+static atomic<int> port_counter(9000); // Начинаем с порта 9000
+
+// Функция для получения свободного порта
+int get_free_port() {
+    while (true) {
+        int port = port_counter++;
+        int sock = socket(AF_INET, SOCK_STREAM, 0);
+        sockaddr_in addr{};
+        addr.sin_family = AF_INET;
+        addr.sin_addr.s_addr = INADDR_ANY;
+        addr.sin_port = htons(port);
         
-        bind(server_fd, (sockaddr*)&address, sizeof(address));
-        listen(server_fd, 3);
+        if (bind(sock, (sockaddr*)&addr, sizeof(addr))) {
+            close(sock);
+            continue;
+        }
+        
+        close(sock);
+        return port;
     }
-    
-    ~TestServer() {
-        close(server_fd);
-    }
-    
-    int accept_connection() {
-        return accept(server_fd, nullptr, nullptr);
-    }
-    
-    int get_port() const { return port; }
-};
+}
+
+// Тихая версия system() без вывода
+int quiet_system(const char* cmd) {
+    int ret = system((string(cmd) + " > /dev/null 2>&1").c_str());
+    this_thread::sleep_for(chrono::milliseconds(100));
+    return ret;
+}
 
 // Тест 1: Проверка создания и запуска коллектора
 void test_collector_creation() {
-    const int test_port = 8081;
-    thread collector_thread([test_port]() {
-        system((string("./stats_collector ") + 
-                   to_string(test_port) + " 10 1").c_str());
+    int port = get_free_port();
+    thread collector_thread([port]() {
+        quiet_system((string("./stats_collector ") + to_string(port) + " 10 1").c_str());
     });
     
     this_thread::sleep_for(chrono::milliseconds(500));
     
-    // Проверяем что сервер запущен, пытаясь подключиться
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     sockaddr_in serv_addr{};
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(test_port);
+    serv_addr.sin_port = htons(port);
     inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr);
     
     assert(connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr)) == 0);
     close(sock);
     
     collector_thread.detach();
+    this_thread::sleep_for(chrono::milliseconds(500));
 }
 
 // Тест 2: Проверка обработки сообщений
 void test_message_processing() {
-    TestServer server(8082);
-    thread collector_thread([]() {
-        system("./stats_collector 8082 10 1");
+    int port = get_free_port();
+    thread collector_thread([port]() {
+        quiet_system((string("./stats_collector ") + to_string(port) + " 10 1").c_str());
     });
     
     this_thread::sleep_for(chrono::milliseconds(500));
@@ -75,7 +80,7 @@ void test_message_processing() {
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     sockaddr_in serv_addr{};
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(8082);
+    serv_addr.sin_port = htons(port);
     inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr);
     
     connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr));
@@ -84,13 +89,14 @@ void test_message_processing() {
     close(sock);
     
     collector_thread.detach();
+    this_thread::sleep_for(chrono::milliseconds(500));
 }
 
 // Тест 3: Проверка статистики по уровням важности
 void test_importance_stats() {
-    TestServer server(8083);
-    thread collector_thread([]() {
-        system("./stats_collector 8083 10 1");
+    int port = get_free_port();
+    thread collector_thread([port]() {
+        quiet_system((string("./stats_collector ") + to_string(port) + " 10 1").c_str());
     });
     
     this_thread::sleep_for(chrono::milliseconds(500));
@@ -98,7 +104,7 @@ void test_importance_stats() {
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     sockaddr_in serv_addr{};
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(8083);
+    serv_addr.sin_port = htons(port);
     inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr);
     
     connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr));
@@ -116,13 +122,14 @@ void test_importance_stats() {
     
     close(sock);
     collector_thread.detach();
+    this_thread::sleep_for(chrono::milliseconds(500));
 }
 
 // Тест 4: Проверка статистики длины сообщений
 void test_message_length_stats() {
-    TestServer server(8084);
-    thread collector_thread([]() {
-        system("./stats_collector 8084 10 1");
+    int port = get_free_port();
+    thread collector_thread([port]() {
+        quiet_system((string("./stats_collector ") + to_string(port) + " 10 1").c_str());
     });
     
     this_thread::sleep_for(chrono::milliseconds(500));
@@ -130,7 +137,7 @@ void test_message_length_stats() {
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     sockaddr_in serv_addr{};
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(8084);
+    serv_addr.sin_port = htons(port);
     inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr);
     
     connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr));
@@ -143,13 +150,14 @@ void test_message_length_stats() {
     
     close(sock);
     collector_thread.detach();
+    this_thread::sleep_for(chrono::milliseconds(500));
 }
 
-// Тест 5: Проверка временной статистики (сообщения за последний час)
+// Тест 5: Проверка временной статистики
 void test_time_based_stats() {
-    TestServer server(8085);
-    thread collector_thread([]() {
-        system("./stats_collector 8085 10 1");
+    int port = get_free_port();
+    thread collector_thread([port]() {
+        quiet_system((string("./stats_collector ") + to_string(port) + " 10 1").c_str());
     });
     
     this_thread::sleep_for(chrono::milliseconds(500));
@@ -157,12 +165,11 @@ void test_time_based_stats() {
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     sockaddr_in serv_addr{};
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(8085);
+    serv_addr.sin_port = htons(port);
     inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr);
     
     connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr));
     
-    // Отправляем сообщение с текущим временем
     time_t now = time(nullptr);
     tm* tm_now = localtime(&now);
     char time_buf[64];
@@ -173,6 +180,7 @@ void test_time_based_stats() {
     
     close(sock);
     collector_thread.detach();
+    this_thread::sleep_for(chrono::milliseconds(500));
 }
 
 int main() {

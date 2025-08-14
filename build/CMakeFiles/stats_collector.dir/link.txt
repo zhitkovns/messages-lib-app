@@ -1,1 +1,1 @@
-/usr/bin/g++  -pthread -g CMakeFiles/stats_collector.dir/stats_collector.cpp.o -o stats_collector  -lpthread libjournal_lib.a -lpthread 
+/usr/bin/g++  -pthread -g CMakeFiles/stats_collector.dir/stats_collector.cpp.o -o stats_collector  -Wl,-rpath,/home/leviafan-desktop/Projects/messages-lib-app/build -lpthread libjournal_lib.so 

@@ -2,6 +2,18 @@
 	"entries" : 
 	[
 		{
+			"name" : "BUILD_SHARED_LIBS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "No help, variable specified on the command line."
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : "ON"
+		},
+		{
 			"name" : "BUILD_TESTS",
 			"properties" : 
 			[
@@ -11,7 +23,7 @@
 				}
 			],
 			"type" : "BOOL",
-			"value" : "OFF"
+			"value" : "ON"
 		},
 		{
 			"name" : "CMAKE_ADDR2LINE",

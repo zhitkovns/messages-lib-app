@@ -92,7 +92,7 @@ stats_tests_EXTERNAL_OBJECTS =
 
 stats_tests: CMakeFiles/stats_tests.dir/tests/stats_tests.cpp.o
 stats_tests: CMakeFiles/stats_tests.dir/build.make
-stats_tests: libjournal_lib.a
+stats_tests: libjournal_lib.so
 stats_tests: CMakeFiles/stats_tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/leviafan-desktop/Projects/messages-lib-app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable stats_tests"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/stats_tests.dir/link.txt --verbose=$(VERBOSE)
