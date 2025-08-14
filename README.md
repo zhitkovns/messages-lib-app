@@ -294,8 +294,10 @@ Develop a console program to collect socket log statistics (from Part 1.5).
     ├── journal_tests.cpp # Logging tests  
     └── stats_tests.cpp   # Stats tests  
 ```
-**Target OS:** Linux 
+**Target OS: Linux**
+
 **Project build: CMake**
+
 **Compilation: gcc** 
 
 ---
