@@ -185,6 +185,27 @@ LD_LIBRARY_PATH=. ./journal_app log.txt MEDIUM
    cmake -DBUILD_TESTS=OFF .. 
    ```
 
+#### 🔹 Примеры:
+
+1. Запись в журнале:
+   ```
+   [2025-08-12 14:39:43] [HIGH] message
+   ```
+2. Вывод статистики:
+   ```
+   === Statistics ===
+   Total messages: 5
+   By importance:
+   LOW:    0
+   MEDIUM: 4
+   HIGH:   1
+   Last hour: 5 messages
+   Message lengths:
+   Min: 43
+   Max: 46
+   Avg: 43.8
+   =================
+   ```
 ---
 
 
@@ -352,5 +373,27 @@ LD_LIBRARY_PATH=. ./journal_app log.txt MEDIUM
    ```
    cmake -DBUILD_TESTS=OFF ..  
    ```  
+
+#### 🔹 Examples:
+
+1. Journal entry:
+   ```
+   [2025-08-12 14:39:43] [HIGH] message
+   ```
+2. Statistics output:
+   ```
+   === Statistics ===
+   Total messages: 5
+   By priority:
+   LOW:    0
+   MEDIUM: 4
+   HIGH:   1
+   Last hour: 5 messages
+   Message lengths:
+   Min: 43
+   Max: 46
+   Avg: 43.8
+   =================
+   ```
 
 --- 
