@@ -16,8 +16,9 @@
 
 using namespace std;
 
+// Структура для хранения статистики
 struct MessageStats {
-    mutex stats_mutex; 
+    mutex stats_mutex; // Для защиты многопоточного доступа
     size_t total = 0;
     size_t min_len = 0;
     size_t max_len = 0;
@@ -27,21 +28,24 @@ struct MessageStats {
         {importances::MEDIUM, 0},
         {importances::HIGH, 0}
     };
-    vector<pair<time_t, size_t>> last_hour;
+    vector<pair<time_t, size_t>> last_hour; // Сообщения за последний час
 };
 
+// Определение уровня важности из сообщения
 importances parse_importance(const string& msg) {
     if (msg.find("[LOW]") != string::npos) return importances::LOW;
-    if (msg.find("[HIGH]") != string::npos) return importances::HIGH;
-    return importances::MEDIUM;
+    if (msg.find("[MEDIUM]") != string::npos) return importances::MEDIUM;
+    return importances::HIGH;
 }
 
+// Обновление статистики (потокобезопасное)
 void update_stats(MessageStats& stats, const string& msg, time_t now) {
     lock_guard<mutex> lock(stats.stats_mutex); 
     
     stats.total++;
     const size_t len = msg.size();
     
+    // Статистика длин
     if (stats.total == 1) {
         stats.min_len = stats.max_len = len;
     } else {
@@ -50,9 +54,11 @@ void update_stats(MessageStats& stats, const string& msg, time_t now) {
     }
     stats.avg_len = (stats.avg_len * (stats.total - 1) + len) / stats.total;
     
+    // Статистика по важности
     importances imp = parse_importance(msg);
     stats.by_importance[imp]++;
     
+    // За последний час
     stats.last_hour.emplace_back(now, len);
     stats.last_hour.erase(
         remove_if(stats.last_hour.begin(), stats.last_hour.end(),
@@ -61,6 +67,7 @@ void update_stats(MessageStats& stats, const string& msg, time_t now) {
     );
 }
 
+// Вывод статистики
 void print_stats(MessageStats& stats) {  
     lock_guard<mutex> lock(stats.stats_mutex); 
     
@@ -79,16 +86,14 @@ void print_stats(MessageStats& stats) {
 }
 
 int main(int argc, char* argv[]) {
-    time_t last_activity_time = time(nullptr); // Время последнего сообщения
-    size_t last_printed_total = 0; // Количество сообщений при последнем выводе
     if (argc < 4) {
         cout << "Usage: " << argv[0] << " <port> <N> <T>\n";
         return 1;
     }
 
     const int port = stoi(argv[1]);
-    const size_t N = stoul(argv[2]);
-    const size_t T = stoul(argv[3]);
+    const size_t N = stoul(argv[2]); // Выводить каждые N сообщений
+    const size_t T = stoul(argv[3]); // Выводить через T секунд после последнего изменения
 
     // Создание сокета
     int listen_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -140,20 +145,23 @@ int main(int argc, char* argv[]) {
          << ":" << ntohs(client_addr.sin_port) << endl;
 
     MessageStats stats;
-    auto last_print_time = time(nullptr);
-    size_t last_total = 0;
+    time_t last_activity_time = time(nullptr); // Время последнего сообщения
+    size_t last_printed_total = 0;             // Количество сообщений при последнем выводе
 
+    // Основной цикл обработки сообщений
     char buffer[4096];
+    bool waiting_for_message = true; // Флаг ожидания нового сообщения для старта таймера
+    
     while (true) {
         time_t now = time(nullptr);
         
-        // Проверяем, нужно ли выводить статистику по таймауту
-        if (difftime(now, last_activity_time) >= T) {
+        // Проверяем таймаут только если ожидаем сообщения (таймер запущен)
+        if (!waiting_for_message && difftime(now, last_activity_time) >= T) {
             if (stats.total > last_printed_total) {
                 print_stats(stats);
                 last_printed_total = stats.total;
             }
-            last_activity_time = now; // Сбрасываем таймер
+            waiting_for_message = true; // Сбрасываем таймер, ждем новое сообщение
         }
     
         // Чтение сообщения с таймаутом
@@ -171,8 +179,11 @@ int main(int argc, char* argv[]) {
             
             update_stats(stats, message, now);
             cout << "Received: " << message << endl;
-            last_activity_time = now; // Обновляем время последней активности
-    
+            
+            // Запускаем/сбрасываем таймер
+            last_activity_time = now;
+            waiting_for_message = false; // Таймер активен
+            
             // Проверка вывода по количеству сообщений
             if (stats.total % N == 0) {
                 print_stats(stats);

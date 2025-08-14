@@ -29,32 +29,36 @@ int get_free_port() {
         addr.sin_addr.s_addr = INADDR_ANY;
         addr.sin_port = htons(port);
         
+        // Пытаемся занять порт
         if (bind(sock, (sockaddr*)&addr, sizeof(addr))) {
             close(sock);
-            continue;
+            continue; // Порт занят, пробуем следующий
         }
         
         close(sock);
-        return port;
+        return port;  // Нашли свободный порт
     }
 }
 
-// Тихая версия system() без вывода
+// Тихая версия system() (подавляем вывод в консоль, чтобы не захламлять его)
 int quiet_system(const char* cmd) {
     int ret = system((string(cmd) + " > /dev/null 2>&1").c_str());
-    this_thread::sleep_for(chrono::milliseconds(100));
+    this_thread::sleep_for(chrono::milliseconds(100)); // Небольшая задержка
     return ret;
 }
 
 // Тест 1: Проверка создания и запуска коллектора
 void test_collector_creation() {
     int port = get_free_port();
+
+    // Запускаем stats_collector в отдельном потоке
     thread collector_thread([port]() {
         quiet_system((string("./stats_collector ") + to_string(port) + " 10 1").c_str());
     });
     
-    this_thread::sleep_for(chrono::milliseconds(500));
+    this_thread::sleep_for(chrono::milliseconds(500)); // Ждем запуска
     
+    // Пытаемся подключиться к коллектору
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     sockaddr_in serv_addr{};
     serv_addr.sin_family = AF_INET;
@@ -77,6 +81,7 @@ void test_message_processing() {
     
     this_thread::sleep_for(chrono::milliseconds(500));
     
+    // Подключаемся и отправляем тестовое сообщение
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     sockaddr_in serv_addr{};
     serv_addr.sin_family = AF_INET;
@@ -109,6 +114,7 @@ void test_importance_stats() {
     
     connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr));
     
+    // Отправляем сообщения разных уровней важности
     const char* messages[] = {
         "[2023-01-01 12:00:00] [LOW] Message 1\n",
         "[2023-01-01 12:00:01] [HIGH] Message 2\n",
@@ -142,6 +148,7 @@ void test_message_length_stats() {
     
     connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr));
     
+    // Отправляем сообщения разной длины
     const char* short_msg = "[2023-01-01 12:00:00] [LOW] Short\n";
     const char* long_msg = "[2023-01-01 12:00:01] [HIGH] Very long message for testing\n";
     
@@ -170,6 +177,7 @@ void test_time_based_stats() {
     
     connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr));
     
+    // Отправляем сообщение с текущим временем
     time_t now = time(nullptr);
     tm* tm_now = localtime(&now);
     char time_buf[64];

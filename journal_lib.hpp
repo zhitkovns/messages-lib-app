@@ -9,16 +9,17 @@
 #include <unistd.h>
 
 
-enum class importances { LOW, MEDIUM, HIGH };
-importances parse_importance(const std::string& msg);
+enum class importances { LOW, MEDIUM, HIGH }; // Уровни важности сообщений
 
+// Базовый интерфейс для вывода логов
 class LogOutput {
 public:
     virtual ~LogOutput() = default;
-    virtual void write(const std::string& message) = 0;
-    virtual bool is_connected() const = 0;
+    virtual void write(const std::string& message) = 0; // Запись сообщения
+    virtual bool is_connected() const = 0; // Проверка подключения
 };
 
+// Реализация вывода в файл
 class FileOutput : public LogOutput {
 public:
     FileOutput(const std::string& filename);
@@ -29,9 +30,10 @@ public:
 private:
     std::string filename;
     std::ofstream log_file;
-    void reopen();
+    void reopen(); // Переоткрытие файла при ошибках
 };
 
+// Реализация вывода через сокет
 class SocketOutput : public LogOutput {
 public:
     SocketOutput(const std::string& host, int port);
@@ -42,17 +44,22 @@ public:
 private:
     std::string host;
     int port;
-    int sockfd = -1;
-    void connect();
-    void disconnect();
+    int sockfd = -1;   // Дескриптор сокета
+    void connect();    // Установка соединения
+    void disconnect(); // Разрыв соединения
 };
 
+// Основной класс логирования
 class Journal_logger {
 public:
-    Journal_logger(const std::string& filename, importances importance);
-    Journal_logger(const std::string& host, int port, importances importance);
+    // Конструктор для файлового режима
+    Journal_logger(const std::string& filename, importances importance); 
+    // Конструктор для сокетного режима
+    Journal_logger(const std::string& host, int port, importances importance); 
+    
     ~Journal_logger() = default;
 
+    // Запрет копирования и присваивания
     Journal_logger(const Journal_logger&) = delete;
     Journal_logger& operator=(const Journal_logger&) = delete;
 
@@ -66,6 +73,7 @@ private:
     std::unique_ptr<LogOutput> output;
     importances default_importance;
 
+    // Форматирование записи лога
     std::string format_log(
         const std::string& message, 
         importances importance, 

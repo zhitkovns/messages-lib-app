@@ -23,7 +23,7 @@ FileOutput::FileOutput(const string& filename)
     
     // Добавляем BOM только если файл новый
     if (!file_exists && log_file.tellp() == 0) {
-        log_file << "\xEF\xBB\xBF";
+        log_file << "\xEF\xBB\xBF"; // UTF-8 BOM
     }
 }
 
@@ -35,7 +35,7 @@ FileOutput::~FileOutput() {
 
 void FileOutput::write(const string& message) {
     if (!log_file.is_open()) {
-        reopen();
+        reopen(); // Попытка восстановить соединение
     }
     log_file << message << endl;
 }
@@ -54,7 +54,7 @@ void FileOutput::reopen() {
 // SocketOutput 
 SocketOutput::SocketOutput(const string& host, int port) 
     : host(host), port(port) {
-    connect();
+    connect(); // Автоматическое подключение при создании 
 }
 
 SocketOutput::~SocketOutput() {
@@ -73,7 +73,7 @@ void SocketOutput::write(const string& message) {
 
     int result = send(sockfd, message.c_str(), message.size(), 0);
     if (result == -1) {
-        disconnect();
+        disconnect(); // Закрываем нерабочее соединение
         throw runtime_error("Socket send failed: " + string(strerror(errno)));
     }
 }
@@ -119,9 +119,10 @@ Journal_logger::Journal_logger(const string& host, int port, importances importa
 void Journal_logger::message_log(const string& message, importances importance) {
     if (importance < default_importance) return;
     if (message.empty()) {
-        throw std::invalid_argument("Message cannot be empty");
+        throw invalid_argument("Message cannot be empty");
     }
-
+    
+    // Форматирование и запись
     time_t now = time(nullptr);
     string formatted = format_log(message, importance, now);
     output->write(formatted);
@@ -136,14 +137,16 @@ string Journal_logger::format_log(
     importances importance, 
     time_t timestamp
 ) const {
+    // Форматирование временной метки
     char time_buf[64];
     tm time_info;
     if (localtime_r(&timestamp, &time_info) == nullptr) {
-        throw std::runtime_error("Failed to convert time");
+        throw runtime_error("Failed to convert time");
     }
     localtime_r(&timestamp, &time_info);
     strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S", &time_info);
 
+    // Преобразование уровня важности в строку
     const char* importance_str = "";
     switch (importance) {
         case importances::LOW:    importance_str = "LOW";    break;

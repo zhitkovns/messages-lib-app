@@ -11,21 +11,22 @@
 
 using namespace std;
 
-// Вспомогательные функции для тестирования
+// Вспомогательная функция для чтения последней строки файла
 string read_last_line(const string& filename) {
     ifstream file(filename);
     string line, last_line;
     while (getline(file, line)) {
         if (!line.empty()) {
-            last_line = line;
+            last_line = line; // Сохраняем последнюю непустую строку
         }
     }
     return last_line;
 }
 
+// Очистка тестового файла перед каждым тестом
 void clear_test_file(const string& filename) {
     if (filesystem::exists(filename)) {
-        filesystem::remove(filename);
+        filesystem::remove(filename); // Удаляем файл если существует
     }
 }
 
@@ -35,12 +36,13 @@ void test_file_creation() {
     clear_test_file(test_file);
     
     {
+        // Создаем логгер и записываем тестовое сообщение
         Journal_logger logger(test_file, importances::LOW);
         logger.message_log("Test message", importances::LOW);
-    }
+    } // Логгер выходит из области видимости, файл закрывается
     
-    assert(filesystem::exists(test_file));
-    clear_test_file(test_file);
+    assert(filesystem::exists(test_file)); // Проверяем что файл был создан
+    clear_test_file(test_file);            // Очищаем после теста
 }
 
 // Тест 2: Проверка фильтрации по уровню важности
@@ -54,9 +56,10 @@ void test_importance_filter() {
         logger.message_log("High message", importances::HIGH);  // Должно записаться
     }
     
+    // Проверяем содержимое файла
     string content = read_last_line(test_file);
-    assert(content.find("High message") != string::npos);
-    assert(content.find("Low message") == string::npos);
+    assert(content.find("High message") != string::npos); // Должно быть
+    assert(content.find("Low message") == string::npos);  // Не должно быть
     clear_test_file(test_file);
 }
 
@@ -69,11 +72,12 @@ void test_log_format() {
         Journal_logger logger(test_file, importances::LOW);
         logger.message_log("Test format", importances::MEDIUM);
     }
-    
+
+    // Проверяем корректность форматирования
     string line = read_last_line(test_file);
-    assert(line.find("[MEDIUM]") != string::npos);
-    assert(line.find("Test format") != string::npos);
-    assert(line.find("] [") != string::npos); // Проверка формата
+    assert(line.find("[MEDIUM]") != string::npos);    // Уровень важности
+    assert(line.find("Test format") != string::npos); // Сообщение
+    assert(line.find("] [") != string::npos);         // Формат временной метки
     clear_test_file(test_file);
 }
 
@@ -84,10 +88,13 @@ void test_change_importance() {
     
     {
         Journal_logger logger(test_file, importances::HIGH);
+        // Меняем уровень фильтрации
         logger.set_default_importance(importances::LOW);
+        // Теперь сообщение должно записаться
         logger.message_log("Now visible", importances::MEDIUM);
     }
     
+    // Проверяем что сообщение записалось
     string content = read_last_line(test_file);
     assert(content.find("Now visible") != string::npos);
     clear_test_file(test_file);
@@ -107,12 +114,13 @@ void test_thread_safety() {
         }
     };
     
+    // Запускаем 2 потока
     thread t1(worker, 1);
     thread t2(worker, 2);
     t1.join();
     t2.join();
     
-    // Подсчитываем количество строк в файле
+    // Проверяем что все сообщения записались
     ifstream file(test_file);
     int line_count = count(
         istreambuf_iterator<char>(file),
@@ -133,7 +141,8 @@ void test_empty_message() {
     try {
         logger.message_log("", importances::MEDIUM);
         assert(false && "Expected exception for empty message");
-    } catch (const std::invalid_argument& e) {
+    } catch (const invalid_argument& e) {
+        // Проверяем текст ошибки
         assert(string(e.what()).find("cannot be empty") != string::npos);
     }
     
@@ -146,13 +155,11 @@ void test_empty_priority() {
     clear_test_file(test_file);
     
     {
-        // Create logger with MEDIUM as default
         Journal_logger logger(test_file, importances::MEDIUM);
         
-        // This should use MEDIUM priority (default)
         logger.message_log("Test message", importances::MEDIUM);
         
-        // Verify the log contains MEDIUM priority
+        // Проверяем что уровень важности записался правильно
         string content = read_last_line(test_file);
         assert(content.find("[MEDIUM]") != string::npos);
     }

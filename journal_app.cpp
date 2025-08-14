@@ -29,8 +29,10 @@ public:
         m_condition.notify_one();
     }
 
+    // Извлечение задачи (блокировка)
     bool pop(Task& task) {
         unique_lock<mutex> lock(m_mutex);
+        // Ждем пока не появится задача или не придет сигнал остановки
         m_condition.wait(lock, [this]() { return !m_queue.empty() || m_stop; });
         
         if (m_stop && m_queue.empty()) {
@@ -54,7 +56,7 @@ private:
     atomic<bool> m_stop{false};
 };
 
-// Базовый класс для логгеров
+// Базовый абстрактный класс для логгеров (файлового и сокетного). Расширяет функционал Journal_logger
 class ILogger {
 public:
     virtual ~ILogger() = default;
@@ -62,7 +64,7 @@ public:
     virtual importances get_default_importance() const = 0;
 };
 
-// Только файловый логгер
+// Реализация логгера для работы с файлом
 class FileLogger : public ILogger {
 public:
     FileLogger(const string& filename, importances default_level)
@@ -77,7 +79,7 @@ public:
     }
 
 private:
-    Journal_logger logger;
+    Journal_logger logger; // Композиция
 };
 
 // Комбинированный логгер (сокет + файл)
@@ -130,6 +132,7 @@ public:
         }
     }
 
+    // Добавление сообщения в очередь обработки
     void log(const string& message, importances importance) {
         m_queue.push({message, importance});
     }
@@ -137,6 +140,7 @@ public:
     ILogger& get_logger() { return *m_logger; }
 
 private:
+    // Основной цикл обработки задач
     void process_tasks() {
         LogQueue::Task task;
         while (m_running) {
@@ -158,31 +162,31 @@ public:
     InputHandler(LogManager& logger) : m_logger(logger) {}
 
     void run() {
-        std::string input;
+        string input;
         while (true) {
             // Ввод сообщения
             do {
-                std::cout << "Enter message (or 'quit' to exit): ";
-                std::getline(std::cin, input);
+                cout << "Enter message (or 'quit' to exit): ";
+                getline(cin, input);
                 
                 if (input == "quit") {
                     return;
                 }
                 
                 if (input.empty()) {
-                    std::cout << "Error: Message cannot be empty. Please try again.\n";
+                    cout << "Error: Message cannot be empty. Please try again.\n";
                 }
             } while (input.empty());
     
             // Ввод уровня важности с проверкой
             importances importance;
             while (true) {
-                std::cout << "Enter importance (LOW, MEDIUM, HIGH): ";
-                std::string importance_str;
-                std::getline(std::cin, importance_str);
+                cout << "Enter importance (LOW, MEDIUM, HIGH): ";
+                string importance_str;
+                getline(cin, importance_str);
                 
-                // Приводим к верхнему регистру
-                std::transform(importance_str.begin(), importance_str.end(),
+                // Приводим к верхнему регистру для удобства работы
+                transform(importance_str.begin(), importance_str.end(),
                              importance_str.begin(), ::toupper);
                 
                 // Проверяем допустимые значения
@@ -199,11 +203,12 @@ public:
                     break;
                 }
                 else if (importance_str.empty()){
+                    // Использование значения по умолчанию
                     importance = m_logger.get_logger().get_default_importance();
                     break;
                 }
                 else {
-                    std::cout << "Error: Invalid importance level. "
+                    cout << "Error: Invalid importance level. "
                               << "Please enter LOW, MEDIUM or HIGH.\n";
                 }
             }
@@ -211,8 +216,8 @@ public:
             // Логирование сообщения
             try {
                 m_logger.log(input, importance);
-            } catch (const std::exception& e) {
-                std::cerr << "Logging error: " << e.what() << std::endl;
+            } catch (const exception& e) {
+                cerr << "Logging error: " << e.what() << endl;
             }
         }
     }
@@ -227,14 +232,15 @@ void print_usage() {
          << "  Socket mode: journal_app --socket <host> <port> <filename> [default_importance]\n";
 }
 
-// Функция для получения абсолютного пути к файлу в папке проекта
-std::filesystem::path get_project_file_path(const std::string& filename) {
+// Функция для получения абсолютного пути к файлу в папке проекта.
+// Используется для того, чтобы при запуске из терминала журнал создавался 
+// в директории проекта, а не в папке build
+filesystem::path get_project_file_path(const string& filename) {
     // Получаем путь к исполняемому файлу
-    std::filesystem::path exe_path = std::filesystem::canonical("/proc/self/exe"); // Для Linux
-    // Или для Windows: std::filesystem::path exe_path = std::filesystem::canonical(argv[0]);
-    
+    filesystem::path exe_path = filesystem::canonical("/proc/self/exe"); 
+
     // Поднимаемся до папки проекта (из build/ или других подпапок)
-    std::filesystem::path project_dir = exe_path.parent_path(); // Из build/
+    filesystem::path project_dir = exe_path.parent_path(); // Из build/
     if (project_dir.filename() == "build") {
         project_dir = project_dir.parent_path(); // Поднимаемся в папку проекта
     }
@@ -242,8 +248,11 @@ std::filesystem::path get_project_file_path(const std::string& filename) {
     return project_dir / filename;
 }
 
+
 int main(int argc, char* argv[]) {
-    setlocale(LC_ALL, "ru_RU.UTF-8");
+    setlocale(LC_ALL, "ru_RU.UTF-8"); // Для поддержки русского ввода.
+                                      // Сообщения принимаются (распознаются) и на русском 
+                                      // и на английском
     if (argc < 2) {
         print_usage();
         return 1;
@@ -267,6 +276,7 @@ int main(int argc, char* argv[]) {
             if (argc > 5) {
                 string level_str = argv[5];
                 if (level_str == "LOW") default_level = importances::LOW;
+                else if (level_str == "MEDIUM") default_level = importances::MEDIUM;
                 else if (level_str == "HIGH") default_level = importances::HIGH;
             }
 
@@ -279,18 +289,20 @@ int main(int argc, char* argv[]) {
             if (argc > 2) {
                 string level_str = argv[2];
                 if (level_str == "LOW") default_level = importances::LOW;
+                else if (level_str == "MEDIUM") default_level = importances::MEDIUM;
                 else if (level_str == "HIGH") default_level = importances::HIGH;
             }
 
             logger = make_unique<FileLogger>(filename, default_level);
         }
 
+        // Инициализация и запуск системы логирования
         LogManager log_manager(move(logger));
         log_manager.start();
 
         {
             InputHandler input(log_manager);
-            input.run();
+            input.run(); // Ввод
         }
 
         log_manager.stop();
