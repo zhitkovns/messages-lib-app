@@ -1,1 +1,0 @@
-/usr/bin/g++  -pthread -g CMakeFiles/stats_tests.dir/tests/stats_tests.cpp.o -o stats_tests  -Wl,-rpath,/home/leviafan-desktop/Projects/messages-lib-app/build -lpthread libjournal_lib.so 

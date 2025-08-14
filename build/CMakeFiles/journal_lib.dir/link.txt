@@ -1,1 +1,0 @@
-/usr/bin/g++ -fPIC  -pthread -g -shared -Wl,-soname,libjournal_lib.so -o libjournal_lib.so CMakeFiles/journal_lib.dir/journal_lib.cpp.o  -lpthread 
